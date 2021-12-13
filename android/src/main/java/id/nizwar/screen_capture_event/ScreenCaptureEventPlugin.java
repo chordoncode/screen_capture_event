@@ -62,7 +62,7 @@ public class ScreenCaptureEventPlugin implements FlutterPlugin, MethodCallHandle
       case"watch":
         handler = new Handler(Looper.getMainLooper());
 
-        updateScreenRecordStatus();
+        //updateScreenRecordStatus();
         if(Build.VERSION.SDK_INT >=29){
           final List<File> files = new ArrayList<>();
           final List<String> paths = new ArrayList<>();
@@ -194,6 +194,7 @@ public class ScreenCaptureEventPlugin implements FlutterPlugin, MethodCallHandle
 
 
   public static String getMimeType(String url) {
+    url = url.replaceAll(" ", "");
     String type = null;
     String extension = MimeTypeMap.getFileExtensionFromUrl(url);
     if (extension != null) {

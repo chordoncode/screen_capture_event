@@ -1,5 +1,5 @@
 name: screen_capture_event_example
-description: Demonstrates how to use the screen_capture_event plugin. 
+description: Demonstrates how to use the screen_capture_event plugin.
 publish_to: 'none'
 
 environment:
@@ -12,9 +12,36 @@ dependencies:
     path: ../ 
   cupertino_icons: ^1.0.2
 
+  google_ml_kit_for_korean: ^0.0.8 #https://pub.dev/packages/google_ml_kit_for_korean/changelog
+  bringtoforeground: ^0.0.2
+  move_to_background: ^1.0.2 #https://pub.dev/packages/move_to_background
+
+  flutter_tags: ^0.4.9+1
+
+  flutter_observer: ^2.0.0 #https://pub.dev/packages/flutter_observer
+  sqflite: #https://flutter-ko.dev/docs/cookbook/persistence/sqlite
+  intl: ^0.17.0
+
+  #image_gallery_saver: ^1.7.1
+  #path_provider: #https://pub.dev/packages/path_provider
+  #
+
+  #flutter_background_service: ^0.1.5
+  url_launcher: ^6.0.17
+
+  provider: ^6.0.1
+  flutter_screenutil: ^5.0.0+2
+  system_alert_window: ^0.5.0+1
+
+  in_app_purchase: ^2.0.0
+  shared_preferences: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter 
-  flutter_lints: ^1.0.0 
+  flutter_lints: ^1.0.0
+
 flutter: 
-  uses-material-design: true 
+  uses-material-design: true
+  assets:
+    - assets/images/
