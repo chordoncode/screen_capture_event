@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit_for_korean/google_ml_kit_for_korean.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:screen_capture_event_example/common/ad/banner_ad_widget.dart';
 import 'package:screen_capture_event_example/common/detector/hashtag_detector.dart';
 import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 import 'package:screen_capture_event_example/common/util/file_utils.dart';
+import 'package:screen_capture_event_example/main.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
 import 'package:screen_capture_event_example/repositories/hashtag_repository.dart';
 import 'package:screen_capture_event_example/ui/components/hashtag_component.dart';
@@ -20,34 +23,52 @@ class SnapShotPage extends StatefulWidget {
 class _SnapShotPageState extends LifecycleWatcherState<SnapShotPage> {
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(hasActions: false,),
-      body: FutureBuilder<HashTag>(
-          future: _findHashTagFromScreenShot(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return CenterIndicator();
-            }
-
-            return snapshot.data == null
-                ? const Center(
-              child: Text(
-                'No hashtags found ....',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
+      body: Center(
+        child: Column(
+          children: [
+            const SizedBox(height: 10,),
+            const BannerAdWidget(),
+            const SizedBox(height: 10,),
+            FutureBuilder<HashTag>(
+              future: _findHashTagFromScreenShot(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                 return CenterIndicator();
+                }
+                return snapshot.data == null ? buildEmptyResult() : buildResult(snapshot);
+              }
             )
-                : ListView.builder(
-              itemCount: 1,
-              itemBuilder: (context, index) {
-                return HashTagComponent(
-                    hashTag: snapshot.data!);
-              },
-            );
-          }
+          ]
+        )
       )
+    );
+  }
+
+  Widget buildResult(AsyncSnapshot<HashTag> snapshot) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: 1,
+        itemBuilder: (context, index) {
+          return HashTagComponent(hashTag: snapshot.data!);
+        }
+      )
+    );
+  }
+
+  Widget buildEmptyResult() {
+    return const Text(
+      'No hashtags found ....',
+      style: TextStyle(
+        color: Colors.white,
+      ),
     );
   }
 

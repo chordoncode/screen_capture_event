@@ -43,7 +43,7 @@ abstract class LifecycleWatcherState<T extends StatefulWidget> extends State<T>
 
       Navigator.of(context).popUntil((route) => route.isFirst);
       await Navigator.push(context,
-          MaterialPageRoute(builder: (context) => SnapShotPage()));
+          MaterialPageRoute(builder: (context) => const SnapShotPage()));
 
       setState(() {
       });

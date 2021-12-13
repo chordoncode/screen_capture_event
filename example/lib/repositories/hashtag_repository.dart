@@ -10,12 +10,21 @@ class HashTagRepository {
     return await HashTagDb().insert(TABLE, data);
   }
 
-  static Future<void> updateRead(final Map<String, dynamic> data, final int hashTagId) async {
+  static Future<void> update(final Map<String, dynamic> data, final int hashTagId) async {
     HashTagDb().update(TABLE, data, "hashtag_id = ?", [hashTagId]);
   }
 
   static Future<int> delete(final int hashTagId) async {
     return HashTagDb().delete(TABLE, "hashtag_id = ?", [hashTagId]);
+  }
+
+  static Future<HashTagEntity> getHashTag(final int hashTagId) async {
+    Map<String, dynamic> result = await HashTagDb().selectOne(
+        TABLE,
+        where: "hashtag_id = ?",
+        whereArgs: [hashTagId]);
+
+    return HashTagEntity.from(result);
   }
 
   static Future<List<HashTagEntity>> getHashTags() async {

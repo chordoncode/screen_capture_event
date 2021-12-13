@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
-import 'package:screen_capture_event_example/ui/pages/snapshot_page.dart';
+import 'package:screen_capture_event_example/ui/pages/edit_hashtag_page.dart';
 
 class EditButtonWidget extends StatefulWidget {
   final HashTag hashTag;
@@ -18,7 +18,7 @@ class _EditButtonWidgetState extends State<EditButtonWidget> {
     return GestureDetector(
       onTap: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => SnapShotPage()));
+            MaterialPageRoute(builder: (context) => EditHashTagPage(hashTagId: widget.hashTag.id)));
       },
       child: const Text(
           'EDIT',

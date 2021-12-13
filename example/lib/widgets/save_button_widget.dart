@@ -20,7 +20,7 @@ class _SaveButtonWidgetState extends State<SaveButtonWidget> {
     if (widget.enabled) {
       return GestureDetector(
           onTap: () {
-            _save();
+            _update();
 
             ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -46,11 +46,11 @@ class _SaveButtonWidgetState extends State<SaveButtonWidget> {
     );
   }
 
-  void _save() {
+  void _update() {
     // save widget.hashTag to local DB.
-    HashTagRepository.save({
+    HashTagRepository.update({
       'tags': widget.hashTag.tags
-    });
+    }, widget.hashTag.id);
     Observable.instance.notifyObservers(["_HashTagComponentState"], notifyName : "saved", map: {});
   }
 }

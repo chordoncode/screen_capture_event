@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:screen_capture_event_example/common/detector/hashtag_detector.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
+import 'package:screen_capture_event_example/common/permission/permission_request.dart';
 import 'package:screen_capture_event_example/common/sqlite/hashtag_db.dart';
 import 'package:screen_capture_event_example/ui/pages/layout.dart';
 import 'package:system_alert_window/models/system_window_header.dart';
@@ -11,7 +13,6 @@ import 'package:bringtoforeground/bringtoforeground.dart';
 import 'dart:async';
 
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
-
 
 bool activated = false;
 bool captured = false;
@@ -30,6 +31,8 @@ void main() {
     }
 
     await PaymentService.instance.init();
+    MobileAds.instance.initialize();
+
     runApp(MyApp());
     HashTagDb().init();
   }, (Object error, StackTrace trace) {
@@ -62,6 +65,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    PermissionRequest.requestCameraPermission(context);
+
     return ScreenUtilInit(
       designSize: const Size(392, 759),
       builder: () => MaterialApp(

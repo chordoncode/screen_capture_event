@@ -19,15 +19,14 @@ class PaymentService {
   List<PurchaseDetails> _purchases = [];
   bool _isAvailable = false;
   bool _purchasePending = false;
-  late dynamic _callback;
+  dynamic _callback;
 
   init() async {
     await _init();
   }
 
   Future<void> _init() async {
-    final Stream<List<PurchaseDetails>> purchaseUpdated = _inAppPurchase
-        .purchaseStream;
+    final Stream<List<PurchaseDetails>> purchaseUpdated = _inAppPurchase.purchaseStream;
     _subscription = purchaseUpdated.listen((purchaseDetailsList) {
       _listenToPurchaseUpdated(purchaseDetailsList);
     }, onDone: () {
@@ -49,13 +48,13 @@ class PaymentService {
     if (purchaseDetailsList.isEmpty) {
       _purchases.clear();
       _purchasePending = false;
-      _callback();
+      _callback??_callback();
       return;
     }
     for (var purchaseDetails in purchaseDetailsList) {
       if (purchaseDetails.status == PurchaseStatus.pending) {
         _showPendingUI();
-        _callback();
+        _callback??_callback();
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {
           _handleError(purchaseDetails.error!);
@@ -69,7 +68,7 @@ class PaymentService {
         if (purchaseDetails.pendingCompletePurchase) {
           await _inAppPurchase.completePurchase(purchaseDetails);
         }
-        _callback();
+        _callback??_callback();
       }
     }
   }
