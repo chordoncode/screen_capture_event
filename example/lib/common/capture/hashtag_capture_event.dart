@@ -43,7 +43,7 @@ class HashTagCaptureEvent {
 
 
         } else {
-          AppNotification().showNotification(-1, 'Grab tags', 'No tags. Please check!');
+          AppNotification().showNotification(-1, 'Grab tags', 'No tags. Please retry!');
         }
       }
     });
@@ -68,6 +68,8 @@ class HashTagCaptureEvent {
   }
 
   Future<void> _copyToClipboard(HashTag hashTag) {
-    return Clipboard.setData(ClipboardData(text: hashTag.tags));
+    return Future.delayed(const Duration(milliseconds: 3000), () {
+      return Clipboard.setData(ClipboardData(text: hashTag.tags));
+    });
   }
 }

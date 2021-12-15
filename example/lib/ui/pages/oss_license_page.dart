@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 
 class OssLicensePage extends StatefulWidget {
   const OssLicensePage({Key? key}) : super(key: key);
@@ -6,7 +7,7 @@ class OssLicensePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _OssLicensePageState();
 }
-class _OssLicensePageState extends State<OssLicensePage> {
+class _OssLicensePageState extends LifecycleWatcherState<OssLicensePage> {
 
   @override
   Widget build(BuildContext context) {

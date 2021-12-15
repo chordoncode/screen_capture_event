@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:screen_capture_event_example/common/ad/interstitial_ad_widget.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
 
@@ -29,7 +28,7 @@ class _CopyButtonWidgetState extends State<CopyButtonWidget> {
     return GestureDetector(
         onTap: () {
           final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
-          _interstitialAdWidget.init();
+          _interstitialAdWidget.init(context);
 
           _copyToClipboard().then((value) {
             ScaffoldMessenger.of(context).showSnackBar(

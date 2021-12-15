@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
 import 'package:screen_capture_event_example/widgets/button/custom_buttons.dart';
 import 'package:screen_capture_event_example/widgets/center_indicator.dart';
@@ -12,7 +13,7 @@ class SubscriptionPage extends StatefulWidget {
   _SubscriptionPageState createState() => _SubscriptionPageState();
 }
 
-class _SubscriptionPageState extends State<SubscriptionPage> {
+class _SubscriptionPageState extends LifecycleWatcherState<SubscriptionPage> {
   bool _pending = true;
 
   void _callBackToSetUpdate() {

@@ -29,7 +29,7 @@ class _InterstitialAdPageState extends LifecycleWatcherState<InterstitialAdPage>
 
   _executeAfterWholeBuildProcess(BuildContext context) {
     final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
-    _interstitialAdWidget.init();
+    _interstitialAdWidget.init(context);
     Navigator.pop(context);
   }
 }

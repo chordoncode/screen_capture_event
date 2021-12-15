@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 import 'package:screen_capture_event_example/ui/pages/oss_license_page.dart';
 import 'package:screen_capture_event_example/widgets/app_version_widget.dart';
 import 'package:screen_capture_event_example/widgets/footer.dart';
@@ -19,7 +20,7 @@ class SettingPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SettingPageState();
 }
-class _SettingPageState extends State<SettingPage> {
+class _SettingPageState extends LifecycleWatcherState<SettingPage> {
   @override
   Widget build(BuildContext context) {
     const double icon_size = 25;

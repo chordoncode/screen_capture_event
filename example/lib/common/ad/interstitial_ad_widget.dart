@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:move_to_background/move_to_background.dart';
+import 'package:screen_capture_event_example/ui/pages/layout.dart';
 
 class InterstitialAdWidget {
   static final Map<String, String> UNIT_ID = kReleaseMode
@@ -21,15 +22,15 @@ class InterstitialAdWidget {
   int _numInterstitialLoadAttempts = 0;
 
 
-  Future<void> init() {
-    return _createInterstitialAd();
+  Future<void> init(BuildContext context) {
+    return _createInterstitialAd(context);
   }
 
   bool isLoaded() {
     return _interstitialAd != null;
   }
 
-  Future<void> _createInterstitialAd() {
+  Future<void> _createInterstitialAd(BuildContext context) {
     return InterstitialAd.load(
         adUnitId: UNIT_ID[Platform.isAndroid ? 'android' : 'ios']!,
         request: const AdRequest(),
@@ -39,38 +40,34 @@ class InterstitialAdWidget {
             _numInterstitialLoadAttempts = 0;
             _interstitialAd!.setImmersiveMode(true);
 
-            _showInterstitialAd();
+            _showInterstitialAd(context);
           },
           onAdFailedToLoad: (LoadAdError error) {
             print('InterstitialAd failed to load: $error.');
             _numInterstitialLoadAttempts += 1;
             _interstitialAd = null;
             if (_numInterstitialLoadAttempts <= maxFailedLoadAttempts) {
-              _createInterstitialAd();
+              _createInterstitialAd(context);
             }
           },
         ));
   }
 
-  void _showInterstitialAd() {
+  void _showInterstitialAd(BuildContext context) {
     if (_interstitialAd == null) {
-      print('Warning: attempt to show interstitial before loaded.');
       return;
     }
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (InterstitialAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
+      onAdShowedFullScreenContent: (InterstitialAd ad) {},
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
 
-        MoveToBackground.moveTaskToBack();
+        //MoveToBackground.moveTaskToBack();
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
 
-        MoveToBackground.moveTaskToBack();
+        //MoveToBackground.moveTaskToBack();
       },
     );
     _interstitialAd!.show();
