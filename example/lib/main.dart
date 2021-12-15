@@ -3,16 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:screen_capture_event_example/common/detector/hashtag_detector.dart';
+import 'package:screen_capture_event_example/common/notification/app_notification.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
 import 'package:screen_capture_event_example/common/permission/permission_request.dart';
 import 'package:screen_capture_event_example/common/sqlite/hashtag_db.dart';
+import 'package:screen_capture_event_example/common/storage/shared_storage_key.dart';
 import 'package:screen_capture_event_example/ui/pages/layout.dart';
+import 'package:screen_capture_event_example/ui/pages/on_boarding_page.dart';
 import 'package:system_alert_window/models/system_window_header.dart';
 import 'package:system_alert_window/system_alert_window.dart';
 import 'package:bringtoforeground/bringtoforeground.dart';
 import 'dart:async';
 
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
+
+import 'common/storage/shared_storage.dart';
 
 bool activated = false;
 bool captured = false;
@@ -31,10 +36,17 @@ void main() {
     }
 
     await PaymentService.instance.init();
-    MobileAds.instance.initialize();
+    await MobileAds.instance.initialize();
+
+    if (!kReleaseMode) {
+      RequestConfiguration configuration = RequestConfiguration(testDeviceIds: ["0FFD109BEDA7014C5C6D41BC6A1B0CFD"]);
+      MobileAds.instance.updateRequestConfiguration(configuration);
+    }
+
+    await SharedStorage().init();
 
     runApp(MyApp());
-    HashTagDb().init();
+    //HashTagDb().init();
   }, (Object error, StackTrace trace) {
     print(error);
     print(trace);
@@ -51,6 +63,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
+    AppNotification().requestPermissions();
     _requestPermissions();
 
     //SystemAlertWindow.registerOnClickListener(callBack);
@@ -59,7 +73,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     PaymentService.instance.dispose();
-    HashTagDetector().textDetector.close();
+    HashTagDetector().close();
+    AppNotification().dispose();
     super.dispose();
   }
 
@@ -67,14 +82,17 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     PermissionRequest.requestCameraPermission(context);
 
+    bool? doneOnBoarding = SharedStorage.read(SharedStorageKey.doneOnBoarding);
+    doneOnBoarding = doneOnBoarding?? false;
+
     return ScreenUtilInit(
       designSize: const Size(392, 759),
       builder: () => MaterialApp(
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.grey.shade100,
+          scaffoldBackgroundColor: Colors.grey.shade900,
           primarySwatch: Colors.grey,
         ),
-        home: Layout(),
+        home: doneOnBoarding! ? Layout(fromOnBoardingPage: false) : const OnBoardingPage(),
         debugShowCheckedModeBanner: false,
       )
     );
@@ -94,8 +112,8 @@ class _MyAppState extends State<MyApp> {
     SystemWindowFooter footer = SystemWindowFooter(
         buttons: [
           SystemWindowButton(
-            text: SystemWindowText(text: "move to grab tags", fontSize: 10, textColor: Color.fromRGBO(250, 139, 97, 1)),
-            tag: "grab",
+            text: SystemWindowText(text: "move to grab_tags tags", fontSize: 10, textColor: Color.fromRGBO(250, 139, 97, 1)),
+            tag: "grab_tags",
             //padding: SystemWindowPadding(left: 10, right: 10, bottom: 10, top: 10),
             width: SystemWindowButton.MATCH_PARENT,
             height: 30,
@@ -138,7 +156,7 @@ class _MyAppState extends State<MyApp> {
 void callBack(String tag) {
   print(tag);
   switch (tag) {
-    case "grab":
+    case "grab_tags":
     //SystemAlertWindow.closeSystemWindow(prefMode: SystemWindowPrefMode.OVERLAY);
       Bringtoforeground.bringAppToForeground();
       break;

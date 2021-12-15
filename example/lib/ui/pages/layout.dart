@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:screen_capture_event_example/ui/pages/setting_page.dart';
 import 'package:screen_capture_event_example/ui/pages/subscription_page.dart';
 import 'package:screen_capture_event_example/ui/pages/tag_list_page.dart';
 import 'package:screen_capture_event_example/widgets/appbar/custom_app_bar.dart';
 import 'dart:io';
 
-import 'home_page.dart';
-
 class Layout extends StatefulWidget {
-  final int? currentIndex;
+  int? currentIndex;
+  final bool fromOnBoardingPage;
 
-  Layout([this.currentIndex]);
+  Layout({Key? key, this.currentIndex, required this.fromOnBoardingPage}) : super(key: key);
 
   @override
   _LayoutState createState() => _LayoutState();
@@ -18,24 +19,30 @@ class Layout extends StatefulWidget {
 class _LayoutState extends State<Layout> with WidgetsBindingObserver {
 
   int _currentIndex = 0;
-  final List<BottomNavigationBarItem> _bottomNavigationBarItems = const [
-    BottomNavigationBarItem(
-      label: 'Home',
-      icon: Icon(Icons.home),
+  final List<SalomonBottomBarItem> _bottomNavigationBarItems = [
+    SalomonBottomBarItem(
+      title: const Text('My Tags'),
+      icon: const Icon(Icons.tag),
+      unselectedColor: Colors.white,
+      selectedColor: Colors.lightBlueAccent,
     ),
-    BottomNavigationBarItem(
-      label: 'My Tags',
-      icon: Icon(Icons.tag),
+    SalomonBottomBarItem(
+      title: const Text('Subscription'),
+      icon: const Icon(Icons.subscriptions),
+      unselectedColor: Colors.white,
+      selectedColor: Colors.greenAccent,
     ),
-    BottomNavigationBarItem(
-      label: 'Subscription',
-      icon: Icon(Icons.subscriptions),
+    SalomonBottomBarItem(
+      title: const Text('Setting'),
+      icon: const Icon(Icons.settings),
+      unselectedColor: Colors.white,
+      selectedColor: Colors.blueGrey,
     ),
   ];
   final List<Widget> _widgetOptions = [
-    const HomePage(),
     const TagListPage(),
-    const SubscriptionPage()
+    const SubscriptionPage(),
+    const SettingPage()
   ];
 
   Future<bool> _onBackPressed(BuildContext context) async {
@@ -66,18 +73,19 @@ class _LayoutState extends State<Layout> with WidgetsBindingObserver {
     return WillPopScope(
       onWillPop: () => _onBackPressed(context),
       child: Scaffold(
-        appBar: const CustomAppBar(hasActions: true,),
+        appBar: CustomAppBar(hasActions: true, fromOnBoardingPage: widget.fromOnBoardingPage),
         body: _widgetOptions[_currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            onTap: (int index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            currentIndex: _currentIndex,
-            items: _bottomNavigationBarItems
-        )
+        bottomNavigationBar: SalomonBottomBar(
+          margin: const EdgeInsets.only(left:50.0, right: 50.0, top:8.0, bottom:8.0),
+          currentIndex: _currentIndex,
+          onTap: (int index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          // dotIndicatorColor: Colors.black,
+          items: _bottomNavigationBarItems
+        ),
       )
     );
   }

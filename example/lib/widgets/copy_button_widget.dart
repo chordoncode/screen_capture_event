@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:screen_capture_event_example/common/ad/interstitial_ad_page.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:screen_capture_event_example/common/ad/interstitial_ad_widget.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
 
 class CopyButtonWidget extends StatefulWidget {
@@ -12,17 +13,14 @@ class CopyButtonWidget extends StatefulWidget {
 }
 
 class _CopyButtonWidgetState extends State<CopyButtonWidget> {
-  final InterstitialAdPage _interstitialAdPage = InterstitialAdPage();
 
   @override
   void initState() {
     super.initState();
-    _interstitialAdPage.init();
   }
 
   @override
   void dispose() {
-    _interstitialAdPage.dispose();
     super.dispose();
   }
 
@@ -30,6 +28,9 @@ class _CopyButtonWidgetState extends State<CopyButtonWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
+          final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
+          _interstitialAdWidget.init();
+
           _copyToClipboard().then((value) {
             ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -42,14 +43,13 @@ class _CopyButtonWidgetState extends State<CopyButtonWidget> {
             'COPY',
             style: TextStyle(
                 color: Colors.white,
-                fontSize: 15,
+                fontSize: 12,
                 fontWeight: FontWeight.bold)
         )
     );
   }
 
   Future<void> _copyToClipboard() {
-    _interstitialAdPage.showInterstitialAd();
     return Clipboard.setData(ClipboardData(text: widget.hashTag.tags));
   }
 }

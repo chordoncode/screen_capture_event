@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_observer/Observable.dart';
+import 'package:flutter_observer/Observer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
 import 'package:screen_capture_event_example/widgets/copy_button_widget.dart';
@@ -14,13 +16,20 @@ class UneditableHashTagComponent extends StatefulWidget {
   _UneditableHashTagComponentState createState() => _UneditableHashTagComponentState();
 }
 
-class _UneditableHashTagComponentState extends State<UneditableHashTagComponent>  {
+class _UneditableHashTagComponentState extends State<UneditableHashTagComponent> with Observer {
   late HashTag _hashTag;
 
   @override
   void initState() {
     super.initState();
     _hashTag = widget.hashTag;
+    Observable.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    Observable.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -53,5 +62,14 @@ class _UneditableHashTagComponentState extends State<UneditableHashTagComponent>
         ],
       ),
     );
+  }
+
+  @override
+  update(Observable observable, String? notifyName, Map? map) {
+    if (notifyName == 'removed') {
+      setState(() {
+        _hashTag = map!['hashTag'];
+      });
+    }
   }
 }

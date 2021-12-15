@@ -1,12 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit_for_korean/google_ml_kit_for_korean.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:screen_capture_event_example/common/ad/banner_ad_widget.dart';
 import 'package:screen_capture_event_example/common/detector/hashtag_detector.dart';
 import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 import 'package:screen_capture_event_example/common/util/file_utils.dart';
-import 'package:screen_capture_event_example/main.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
 import 'package:screen_capture_event_example/repositories/hashtag_repository.dart';
 import 'package:screen_capture_event_example/ui/components/hashtag_component.dart';
@@ -30,7 +27,7 @@ class _SnapShotPageState extends LifecycleWatcherState<SnapShotPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(hasActions: false,),
+      appBar: CustomAppBar(hasActions: false, fromOnBoardingPage: false),
       body: Center(
         child: Column(
           children: [
@@ -75,15 +72,9 @@ class _SnapShotPageState extends LifecycleWatcherState<SnapShotPage> {
   Future<HashTag> _findHashTagFromScreenShot() async {
     FileSystemEntity fileSystemEntity = FileUtils.getLastScreenShot();
 
-    final inputImage = InputImage.fromFilePath(fileSystemEntity.path);
-    RecognisedText recognisedText = await HashTagDetector().textDetector.processImage(inputImage);
-    final List<String> tags = _resolveHashTags(recognisedText);
+    final List<String> tags = await HashTagDetector().extractHashtagFromFilepath(fileSystemEntity.path);
     final int id = await _save(tags);
     return HashTag.buildNew(id, tags);
-  }
-
-  List<String> _resolveHashTags(final RecognisedText recognisedText) {
-    return ['#c2021a1', '#leonard', '#comet', '#경기도양평', '#redcat51', '#astro6d', '#toastpro2', '#lpro', '#starrynight', '#별이빛나는밤', '#astrophotography', '#천체사진', '#space', '#universe', '#cosmos', '#sky', '#하늘', '#nightsky', '#밤하늘'];
   }
 
   Future<int> _save(List<String> tags) async {

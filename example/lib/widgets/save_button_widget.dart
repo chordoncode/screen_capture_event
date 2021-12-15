@@ -32,7 +32,7 @@ class _SaveButtonWidgetState extends State<SaveButtonWidget> {
               'SAVE',
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 15,
+                  fontSize: 12,
                   fontWeight: FontWeight.bold)
           )
       );
@@ -41,7 +41,7 @@ class _SaveButtonWidgetState extends State<SaveButtonWidget> {
         'SAVE',
         style: TextStyle(
             color: Colors.grey,
-            fontSize: 15,
+            fontSize: 12,
             fontWeight: FontWeight.bold)
     );
   }

@@ -43,10 +43,19 @@ class _TagAreaWidgetState extends State<TagAreaWidget> {
             onRemoved: () {
               // Remove the item from the data source.
               setState(() {
-                _tags.removeAt(index);
+                if (_tags.length == 1) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text('You cannot remove all hash tags.'),
+                          duration: Duration(seconds: 2)
+                      ));
+                } else {
+                  _tags.removeAt(index);
 
-                final HashTag newHashTag = HashTag.buildNew(widget.hashTag.id, _tags);
-                Observable.instance.notifyObservers(["_HashTagComponentState"], notifyName : "removed", map: {"hashTag": newHashTag});
+                  final HashTag newHashTag = HashTag.buildNew(widget.hashTag.id, _tags);
+                  Observable.instance.notifyObservers(["_HashTagComponentState"], notifyName : "removed", map: {"hashTag": newHashTag});
+                  Observable.instance.notifyObservers(["_UneditableHashTagComponentState"], notifyName : "removed", map: {"hashTag": newHashTag});
+                }
               });
               //required
               return true;

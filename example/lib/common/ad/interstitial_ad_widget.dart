@@ -3,44 +3,34 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:move_to_background/move_to_background.dart';
 
-class InterstitialAdPage {
+class InterstitialAdWidget {
   static final Map<String, String> UNIT_ID = kReleaseMode
       ? {
     //'ios': '[YOUR iOS AD UNIT ID]',
     'android': 'ca-app-pub-9201118486372073/4083964131',
   }
       : {
-    //'ios': InterstitialAd.testAdUnitId,
-    'android': InterstitialAd.testAdUnitId,
+    'ios': 'ca-app-pub-3940256099942544/2934735716',
+    'android': 'ca-app-pub-3940256099942544/1033173712',
   };
   static const int maxFailedLoadAttempts = 3;
-
-  BannerAd banner = BannerAd(
-    listener: BannerAdListener(
-      onAdFailedToLoad: (Ad ad, LoadAdError error) {},
-      onAdLoaded: (_) {},
-    ),
-    size: AdSize.banner,
-    adUnitId: UNIT_ID[Platform.isAndroid ? 'android' : 'ios']!,
-    request: const AdRequest(),
-  )
-    ..load();
 
   InterstitialAd? _interstitialAd;
   int _numInterstitialLoadAttempts = 0;
 
 
-  void init() {
-    _createInterstitialAd();
+  Future<void> init() {
+    return _createInterstitialAd();
   }
 
-  void dispose() {
-    banner.dispose();
+  bool isLoaded() {
+    return _interstitialAd != null;
   }
 
-  void _createInterstitialAd() {
-    InterstitialAd.load(
+  Future<void> _createInterstitialAd() {
+    return InterstitialAd.load(
         adUnitId: UNIT_ID[Platform.isAndroid ? 'android' : 'ios']!,
         request: const AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
@@ -48,6 +38,8 @@ class InterstitialAdPage {
             _interstitialAd = ad;
             _numInterstitialLoadAttempts = 0;
             _interstitialAd!.setImmersiveMode(true);
+
+            _showInterstitialAd();
           },
           onAdFailedToLoad: (LoadAdError error) {
             print('InterstitialAd failed to load: $error.');
@@ -60,7 +52,7 @@ class InterstitialAdPage {
         ));
   }
 
-  void showInterstitialAd() {
+  void _showInterstitialAd() {
     if (_interstitialAd == null) {
       print('Warning: attempt to show interstitial before loaded.');
       return;
@@ -71,12 +63,14 @@ class InterstitialAdPage {
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
         print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
-        _createInterstitialAd();
+
+        MoveToBackground.moveTaskToBack();
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
         print('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
-        _createInterstitialAd();
+
+        MoveToBackground.moveTaskToBack();
       },
     );
     _interstitialAd!.show();

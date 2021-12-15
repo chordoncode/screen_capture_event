@@ -18,8 +18,8 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
     'android': 'ca-app-pub-9201118486372073/4333770791',
   }
       : {
-    //'ios': InterstitialAd.testAdUnitId,
-    'android': InterstitialAd.testAdUnitId,
+    'ios': 'ca-app-pub-3940256099942544/2934735716',
+    'android': 'ca-app-pub-3940256099942544/6300978111',
   };
 
   BannerAd banner = BannerAd(
