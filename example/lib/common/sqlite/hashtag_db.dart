@@ -25,7 +25,7 @@ class HashTagDb {
   HashTagDb._internal();
 
   Future<Database> _init() async {
-    //await _deleteDB_temp();
+    await _deleteDB_temp();
 
     return await openDatabase(
       join(await getDatabasesPath(), DB_NAME),
@@ -56,6 +56,7 @@ class HashTagDb {
 
     final int now = TimeUtils.nowForMillisecondsSinceEpoch();
     data['created_date'] = now;
+    data['modified_date'] = now;
 
     return await db.insert(
       table.tableName(),
@@ -66,6 +67,10 @@ class HashTagDb {
 
   Future<void> update(final HashTagTable table, final Map<String, dynamic> data, final String where, final List whereArgs) async {
     final Database db = await database;
+
+    final int now = TimeUtils.nowForMillisecondsSinceEpoch();
+    data['modified_date'] = now;
+
     await db.update(
       table.tableName(),
       data,

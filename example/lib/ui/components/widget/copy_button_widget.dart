@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:screen_capture_event_example/common/ad/interstitial_ad_widget.dart';
+import 'package:screen_capture_event_example/common/payment/payment_service.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
 
 class CopyButtonWidget extends StatefulWidget {
@@ -27,8 +28,10 @@ class _CopyButtonWidgetState extends State<CopyButtonWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
-          _interstitialAdWidget.init(context);
+          if (PaymentService.instance.isPro()) {
+            final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
+            _interstitialAdWidget.init(context);
+          }
 
           _copyToClipboard().then((value) {
             ScaffoldMessenger.of(context).showSnackBar(

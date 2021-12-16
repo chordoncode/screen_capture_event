@@ -2,13 +2,14 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
-import 'package:screen_capture_event_example/ui/pages/edit_hashtag_page.dart';
-import 'package:screen_capture_event_example/ui/pages/layout.dart';
+import 'package:screen_capture_event_example/ui/pages/mytag/edit_hashtag_page.dart';
+import 'package:screen_capture_event_example/ui/pages/main/layout.dart';
 
 class EditButtonWidget extends StatefulWidget {
   final HashTag hashTag;
+  final Function callback;
 
-  const EditButtonWidget({Key? key, required this.hashTag}) : super(key: key);
+  const EditButtonWidget({Key? key, required this.hashTag, required this.callback}) : super(key: key);
 
   @override
   _EditButtonWidgetState createState() => _EditButtonWidgetState();
@@ -53,9 +54,12 @@ class _EditButtonWidgetState extends State<EditButtonWidget> {
   List<Widget> _buildForPro() {
     return [
       GestureDetector(
-          onTap: () {
-            Navigator.push(context,
+          onTap: () async {
+            await Navigator.push(context,
                 MaterialPageRoute(builder: (context) => EditHashTagPage(hashTagId: widget.hashTag.id)));
+            setState(() {
+              widget.callback();
+            });
           },
           child: const Text(
               'EDIT',

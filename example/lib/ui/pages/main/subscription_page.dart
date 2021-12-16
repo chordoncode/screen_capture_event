@@ -51,28 +51,16 @@ class _SubscriptionPageState extends LifecycleWatcherState<SubscriptionPage> {
                       SimpleElevatedButtonWithIcon(
                         label: Column(children: [
                           Text(
-                            PaymentService.instance.isPro()
-                                ? "Already subscribed"
-                                : "Buy",
+                            PaymentService.instance.isPro() ? "Already subscribed" : "Subscribe",
                             style: const TextStyle(
                                 fontSize: 20, color: Colors.white),),
                           const SizedBox(height: 5,),
                           Text(
-                            PaymentService.instance.isPro() ?
-                            "Manage my subscription" :
-                            PaymentService.instance.getProducts().map((ProductDetails productDetails) {
-                              return productDetails.price;
-                            })
-                                .toList()
-                                .first,
-                            style: const TextStyle(
-                                fontSize: 15, color: Colors.white),)
+                            PaymentService.instance.isPro() ? "Manage my subscription" : buildPriceInfo(),
+                            style: const TextStyle(fontSize: 15, color: Colors.white),)
                         ]),
-                        iconData: PaymentService.instance.isPro()
-                            ? Icons.check
-                            : Icons.monetization_on_outlined,
-                        color: PaymentService.instance.isPro() ? Colors
-                            .blueAccent : Colors.greenAccent,
+                        iconData: PaymentService.instance.isPro() ? Icons.check : Icons.monetization_on_outlined,
+                        color: PaymentService.instance.isPro() ? Colors.blueAccent : Colors.greenAccent,
                         onPressed: () {
                           if (PaymentService.instance.isPro()) {
                             launch('https://play.google.com/store/account/subscriptions');
@@ -100,6 +88,11 @@ class _SubscriptionPageState extends LifecycleWatcherState<SubscriptionPage> {
         ],
       );
     }
+  }
+
+  buildPriceInfo() {
+    final ProductDetails productDetails = PaymentService.instance.getProducts().first;
+    return productDetails.price + " / 1month" ;
   }
 }
 

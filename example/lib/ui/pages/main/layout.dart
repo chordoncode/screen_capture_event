@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:screen_capture_event_example/ui/pages/setting_page.dart';
-import 'package:screen_capture_event_example/ui/pages/subscription_page.dart';
-import 'package:screen_capture_event_example/ui/pages/tag_list_page.dart';
+import 'package:screen_capture_event_example/ui/pages/main/setting_page.dart';
+import 'package:screen_capture_event_example/ui/pages/main/subscription_page.dart';
+import 'package:screen_capture_event_example/ui/pages/main/tag_list_page.dart';
 import 'package:screen_capture_event_example/widgets/appbar/custom_app_bar.dart';
 import 'dart:io';
 
@@ -28,7 +29,7 @@ class _LayoutState extends State<Layout> with WidgetsBindingObserver {
     ),
     SalomonBottomBarItem(
       title: const Text('Subscription'),
-      icon: const Icon(Icons.subscriptions),
+      icon: const Icon(Icons.shopping_cart),
       unselectedColor: Colors.white,
       selectedColor: Colors.greenAccent,
     ),
@@ -53,7 +54,28 @@ class _LayoutState extends State<Layout> with WidgetsBindingObserver {
       });
       return false;
     }
-    exit(0);
+    showPlatformDialog(
+      context: context,
+      builder: (context) => BasicDialogAlert(
+        title: const Text("Do you want to exit?"),
+        content: const Text("Please re-activate next time. See you later!"),
+        actions: <Widget>[
+          BasicDialogAction(
+            title: const Text("Cancel"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          BasicDialogAction(
+            title: const Text("Exit"),
+            onPressed: () {
+              exit(0);
+            },
+          ),
+        ],
+      ),
+    );
+    return true;
   }
 
   @override

@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:move_to_background/move_to_background.dart';
-import 'package:screen_capture_event_example/ui/pages/layout.dart';
+import 'package:screen_capture_event_example/ui/pages/main/layout.dart';
 
 class InterstitialAdWidget {
   static final Map<String, String> UNIT_ID = kReleaseMode

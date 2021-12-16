@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
-import 'package:screen_capture_event_example/ui/pages/oss_license_page.dart';
+import 'package:screen_capture_event_example/ui/pages/setting/oss_license_page.dart';
 import 'package:screen_capture_event_example/widgets/app_version_widget.dart';
 import 'package:screen_capture_event_example/widgets/footer.dart';
 import 'package:screen_capture_event_example/widgets/sub_menu_widget.dart';

@@ -3,10 +3,10 @@ import 'package:flutter_observer/Observable.dart';
 import 'package:flutter_observer/Observer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
-import 'package:screen_capture_event_example/widgets/copy_button_widget.dart';
-import 'package:screen_capture_event_example/widgets/save_button_widget.dart';
-import 'package:screen_capture_event_example/widgets/tag_area_widget.dart';
-import 'package:screen_capture_event_example/widgets/tag_date_title_widget.dart';
+import 'package:screen_capture_event_example/ui/components/widget/copy_button_widget.dart';
+import 'package:screen_capture_event_example/ui/components/widget/save_button_widget.dart';
+import 'package:screen_capture_event_example/ui/components/widget/tag_area_widget.dart';
+import 'package:screen_capture_event_example/ui/components/widget/tag_date_title_widget.dart';
 
 class HashTagComponent extends StatefulWidget {
   final HashTag hashTag;

@@ -1,5 +1,6 @@
 import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:icon_animator/icon_animator.dart';
 import 'package:screen_capture_event_example/common/ad/banner_ad_widget.dart';
 import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
@@ -108,7 +109,7 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
                     expandedIcon: const Icon(
                         Icons.keyboard_arrow_down,
                         color: Colors.white, size: 14),
-                    header: _header(TimeUtils.toFormattedString(data[index].dateTime, 'yyyy-MM-dd hh:mm')),
+                    header: _header(data[index]),
                     items: _buildItems(context, data[index]),
                   )
               );
@@ -124,35 +125,69 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
     return widgets;
   }
 
-  Widget _header(String name) {
-    return Column(
+  Widget _header(HashTag hashTag) {
+    return Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          name,
-          style: const TextStyle(
-              fontSize: 10,
-              color: Colors.grey
-          )
-        ),
-        const SizedBox(height: 5,),
-        const Text(
-            'copied from Instagram',
-            style: TextStyle(
-                fontSize: 12,
-                color: Colors.white
+        GestureDetector(
+          onTap: () async {
+            await HashTagRepository.update({
+              'favorite': hashTag.favorite ? 0 : 1
+            }, hashTag.id);
+
+            setState(() {});
+          },
+          child: hashTag.favorite ?
+            SizedBox(
+              width: 25,
+              height: 25,
+              child: IconAnimator(
+                icon: Icons.favorite,
+                finish: Icon(Icons.favorite, color: Colors.amber[600]),
+                loop: 1,
+                children: [
+                  AnimationFrame(size: 0, duration: 80),
+                  AnimationFrame(size: 4, color: Colors.amber[100], duration: 80),
+                  AnimationFrame(size: 8, color: Colors.amber[200], duration: 80),
+                  AnimationFrame(size: 16, color: Colors.amber[300], duration: 80),
+                  AnimationFrame(size: 20, color: Colors.amber[400], duration: 80),
+                  AnimationFrame(size: 24, color: Colors.amber[500], duration: 80),
+                  AnimationFrame(size: 28, color: Colors.amber[600], duration: 80),
+                ],
+              ),
+            ) :
+            const Icon(
+              Icons.favorite_border,
+              color: Colors.blueGrey,
+              size: 25
             )
+        ),
+        const SizedBox(width: 10,),
+        Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                  TimeUtils.toFormattedString(hashTag.modifiedDateTime, 'yyyy-MM-dd hh:mm'),
+                  style: const TextStyle(fontSize: 10, color: Colors.grey)
+              ),
+              const SizedBox(height: 5,),
+              const Text(
+                  'copied from Instagram',
+                  style: TextStyle(fontSize: 12, color: Colors.white)
+              )
+            ]
         )
-      ]
+      ],
     );
   }
 
   List<ListTile> _buildItems(BuildContext context, HashTag hashTag) {
     return [
       ListTile(
-          title: UneditableHashTagComponent(hashTag: hashTag)
-      )
+          title: UneditableHashTagComponent(hashTag: hashTag, callback: (){
+            setState(() {});
+          }))
     ];
   }
 

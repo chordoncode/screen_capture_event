@@ -8,8 +8,8 @@ import 'package:screen_capture_event_example/common/payment/payment_service.dart
 import 'package:screen_capture_event_example/common/permission/permission_request.dart';
 import 'package:screen_capture_event_example/common/sqlite/hashtag_db.dart';
 import 'package:screen_capture_event_example/common/storage/shared_storage_key.dart';
-import 'package:screen_capture_event_example/ui/pages/layout.dart';
-import 'package:screen_capture_event_example/ui/pages/on_boarding_page.dart';
+import 'package:screen_capture_event_example/ui/pages/main/layout.dart';
+import 'package:screen_capture_event_example/ui/pages/main/on_boarding_page.dart';
 import 'package:system_alert_window/models/system_window_header.dart';
 import 'package:system_alert_window/system_alert_window.dart';
 import 'package:bringtoforeground/bringtoforeground.dart';

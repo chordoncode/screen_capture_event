@@ -4,6 +4,8 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
+import 'package:screen_capture_event_example/common/storage/shared_storage.dart';
+import 'package:screen_capture_event_example/common/storage/shared_storage_key.dart';
 
 class PaymentService {
   static const List<String> _kProductIds = <String>['subscription_gold'];
@@ -124,6 +126,7 @@ class PaymentService {
   void _deliverProduct(PurchaseDetails purchaseDetails) async {
     _purchases.add(purchaseDetails);
     _purchasePending = false;
+    SharedStorage.write(SharedStorageKey.pro, true);
   }
 
   _verifyPurchase(PurchaseDetails purchaseDetails) {
@@ -139,7 +142,7 @@ class PaymentService {
   }
 
   bool isPro() {
-    return _purchases.isNotEmpty;
+    return _isAvailable ? _purchases.isNotEmpty : SharedStorage.read(SharedStorageKey.pro);
   }
 
   bool isAvailable() {

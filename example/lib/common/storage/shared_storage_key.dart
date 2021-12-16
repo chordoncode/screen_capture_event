@@ -1,6 +1,7 @@
 enum SharedStorageKey {
   doneOnBoarding,
-  activated
+  activated,
+  pro
 }
 
 extension ParseToName on SharedStorageKey {

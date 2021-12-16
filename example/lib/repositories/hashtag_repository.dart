@@ -4,9 +4,11 @@ import 'package:screen_capture_event_example/common/util/time_utils.dart';
 
 class HashTagRepository {
   static const HashTagTable TABLE = HashTagTable.HASHTAG;
-  static const String DDL = 'CREATE TABLE hashtag(hashtag_id INTEGER PRIMARY KEY AUTOINCREMENT, tags TEXT, created_date INTEGER)';
+  static const String DDL = 'CREATE TABLE hashtag(hashtag_id INTEGER PRIMARY KEY AUTOINCREMENT, tags TEXT, favorite INTEGER, created_date INTEGER, modified_date INTEGER)';
 
   static Future<int> save(final Map<String, dynamic> data) async {
+    data['favorite'] = 0;
+
     return await HashTagDb().insert(TABLE, data);
   }
 
@@ -28,9 +30,22 @@ class HashTagRepository {
   }
 
   static Future<List<HashTagEntity>> getHashTags() async {
-    List<Map<String, dynamic>> result = await HashTagDb().select(
+    List<Map<String, dynamic>> result = [];
+
+    List<Map<String, dynamic>> favorite = await HashTagDb().select(
       TABLE,
-      orderBy: 'hashtag_id desc');
+      where: "favorite = ?",
+      whereArgs: [1],
+      orderBy: 'modified_date desc');
+
+    List<Map<String, dynamic>> nonFavorite = await HashTagDb().select(
+        TABLE,
+        where: "favorite = ?",
+        whereArgs: [0],
+        orderBy: 'modified_date desc');
+
+    result.addAll(favorite);
+    result.addAll(nonFavorite);
 
     return List.generate(result.length, (i) {
       return HashTagEntity.from(result[i]);
@@ -40,20 +55,26 @@ class HashTagRepository {
 
 class HashTagEntity {
   final int hashtagId;
+  final bool favorite;
   final String tags;
   final DateTime createdDate;
+  final DateTime modifiedDate;
 
   HashTagEntity({
     required this.hashtagId,
+    required this.favorite,
     required this.tags,
-    required this.createdDate
+    required this.createdDate,
+    required this.modifiedDate
   });
 
   static HashTagEntity from(final Map<String, dynamic> map) {
     return HashTagEntity(
       hashtagId: map['hashtag_id'],
+      favorite: map['favorite'] == 1,
       tags: map['tags'],
-      createdDate: TimeUtils.toDateTime(map['created_date'])
+      createdDate: TimeUtils.toDateTime(map['created_date']),
+      modifiedDate: TimeUtils.toDateTime(map['modified_date'])
     );
   }
 }

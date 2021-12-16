@@ -3,14 +3,15 @@ import 'package:flutter_observer/Observable.dart';
 import 'package:flutter_observer/Observer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
-import 'package:screen_capture_event_example/widgets/copy_button_widget.dart';
-import 'package:screen_capture_event_example/widgets/edit_button_widget.dart';
-import 'package:screen_capture_event_example/widgets/tag_area_widget.dart';
+import 'package:screen_capture_event_example/ui/components/widget/copy_button_widget.dart';
+import 'package:screen_capture_event_example/ui/components/widget/edit_button_widget.dart';
+import 'package:screen_capture_event_example/ui/components/widget/tag_area_widget.dart';
 
 class UneditableHashTagComponent extends StatefulWidget {
   final HashTag hashTag;
+  final Function callback;
 
-  const UneditableHashTagComponent({Key? key, required this.hashTag}) : super(key: key);
+  const UneditableHashTagComponent({Key? key, required this.hashTag, required this.callback}) : super(key: key);
 
   @override
   _UneditableHashTagComponentState createState() => _UneditableHashTagComponentState();
@@ -49,7 +50,7 @@ class _UneditableHashTagComponentState extends State<UneditableHashTagComponent>
                       children: [
                         CopyButtonWidget(hashTag: _hashTag),
                         const SizedBox(width: 15,),
-                        EditButtonWidget(hashTag: _hashTag)
+                        EditButtonWidget(hashTag: _hashTag, callback: widget.callback)
                       ]
                   )
                 ],
