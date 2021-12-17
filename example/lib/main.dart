@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:screen_capture_event_example/common/appversion/app_version.dart';
 import 'package:screen_capture_event_example/common/detector/hashtag_detector.dart';
+import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 import 'package:screen_capture_event_example/common/notification/app_notification.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
 import 'package:screen_capture_event_example/common/permission/permission_request.dart';
@@ -46,7 +48,8 @@ void main() {
     await SharedStorage().init();
 
     runApp(MyApp());
-    //HashTagDb().init();
+
+    AppVersion.initPackageInfo(); // It should be called after runApp().
   }, (Object error, StackTrace trace) {
     print(error);
     print(trace);
@@ -58,7 +61,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends LifecycleWatcherState<MyApp> {
 
   @override
   void initState() {

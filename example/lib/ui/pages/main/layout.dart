@@ -34,7 +34,7 @@ class _LayoutState extends State<Layout> with WidgetsBindingObserver {
       selectedColor: Colors.greenAccent,
     ),
     SalomonBottomBarItem(
-      title: const Text('Setting'),
+      title: const Text('Settings'),
       icon: const Icon(Icons.settings),
       unselectedColor: Colors.white,
       selectedColor: Colors.blueGrey,
