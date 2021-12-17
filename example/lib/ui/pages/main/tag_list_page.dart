@@ -19,6 +19,7 @@ class TagListPage extends StatefulWidget {
   _TagListPageState createState() => _TagListPageState();
 }
 class _TagListPageState extends LifecycleWatcherState<TagListPage> {
+  int? _updatedFavoriteHashTagId;
 
   @override
   void initState() {
@@ -27,6 +28,7 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return FutureBuilder<List<HashTag>>(
         future: _getHashTagList(),
         builder: (context, snapshot) {
@@ -36,32 +38,44 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
           if (snapshot.data!.isEmpty) {
             return Container(
                 alignment: Alignment.center,
-                child: Column(children: [
-                  const SizedBox(height: 10,),
-                  const BannerAdWidget(),
-                  const SizedBox(height: 10,),
-                  EmptyWidget(
-                    image: null,
-                    packageImage: PackageImage.Image_1,
-                    title: 'No hash tags',
-                    subTitle: 'Grab hash tags from Instagram!',
-                    titleTextStyle: const TextStyle(
-                      fontSize: 22,
-                      color: Color(0xff9da9c7),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    subtitleTextStyle: const TextStyle(
-                      fontSize: 14,
-                      color: Color(0xffabb8d6),
-                    ),
-                  )
-                ])
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: _getWidgetsForEmpty()
+                )
             );
            // return const Text('해시 태그 목록이 없습니다.');
           }
           return _getBody(snapshot.data!);
         }
     );
+  }
+
+  List<Widget> _getWidgetsForEmpty() {
+    List<Widget> widgets = [];
+    widgets.add(const SizedBox(height: 10,));
+
+    if (!PaymentService.instance.isPro()) {
+      widgets.add(const BannerAdWidget());
+      widgets.add(const SizedBox(height: 10,));
+    }
+    widgets.add(
+      EmptyWidget(
+        image: null,
+        packageImage: PackageImage.Image_1,
+        title: 'No hash tags',
+        subTitle: 'Grab hash tags from Instagram!',
+        titleTextStyle: const TextStyle(
+          fontSize: 22,
+          color: Color(0xff9da9c7),
+          fontWeight: FontWeight.w500,
+        ),
+        subtitleTextStyle: const TextStyle(
+          fontSize: 14,
+          color: Color(0xffabb8d6),
+        ),
+      )
+    );
+    return widgets;
   }
 
   Widget _getBody(List<HashTag> data) {
@@ -72,13 +86,13 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
         ),
         child: Center(
           child: Column(
-            children: getWidgets(data)
+            children: _getWidgets(data)
           ),
         )
     );
   }
 
-  List<Widget> getWidgets(data) {
+  List<Widget> _getWidgets(data) {
     List<Widget> widgets = [];
 
     if (!PaymentService.instance.isPro()) {
@@ -100,7 +114,7 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
                   onDismissed: (direction) {
                     setState(() {});
                   },
-                  background: DismissBackground(message: "Good bye~ "),
+                  background: const DismissBackground(message: "Good bye~ "),
                   child: ListExpandableWidget(
                     isExpanded: index == 0 ? true : false,
                     collapsedIcon: const Icon(
@@ -131,13 +145,15 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
       children: [
         GestureDetector(
           onTap: () async {
+            _updatedFavoriteHashTagId = hashTag.id;
+
             await HashTagRepository.update({
               'favorite': hashTag.favorite ? 0 : 1
-            }, hashTag.id);
+            }, hashTag.id, false);
 
             setState(() {});
           },
-          child: hashTag.favorite ?
+          child: _updatedFavoriteHashTagId == hashTag.id && hashTag.favorite ?
             SizedBox(
               width: 25,
               height: 25,
@@ -156,27 +172,30 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
                 ],
               ),
             ) :
-            const Icon(
-              Icons.favorite_border,
-              color: Colors.blueGrey,
+            Icon(
+              hashTag.favorite ? Icons.favorite : Icons.favorite_border,
+              color: hashTag.favorite ? Colors.amber[600] : Colors.blueGrey,
               size: 25
             )
         ),
         const SizedBox(width: 10,),
-        Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                  TimeUtils.toFormattedString(hashTag.modifiedDateTime, 'yyyy-MM-dd hh:mm'),
-                  style: const TextStyle(fontSize: 10, color: Colors.grey)
-              ),
-              const SizedBox(height: 5,),
-              const Text(
-                  'copied from Instagram',
-                  style: TextStyle(fontSize: 12, color: Colors.white)
-              )
-            ]
+        Expanded(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    TimeUtils.toFormattedString(hashTag.modifiedDateTime, 'yyyy-MM-dd hh:mm'),
+                    style: const TextStyle(fontSize: 10, color: Colors.grey)
+                ),
+                const SizedBox(height: 5,),
+                Text(
+                    hashTag.title,
+                    overflow: TextOverflow.fade,
+                    style: const TextStyle(fontSize: 12, color: Colors.white)
+                )
+              ]
+          )
         )
       ],
     );

@@ -36,15 +36,14 @@ class HashTagCaptureEvent {
           Bringtoforeground.bringAppToForeground();
         }
 
-        HashTag? hashTag = await _findHashTagFromScreenShot();
-        if (hashTag != null) {
-          _copyToClipboard(hashTag);
-          AppNotification().showNotification(-1, 'Grab tags', 'Paste copied tags!');
-
-
-        } else {
-          AppNotification().showNotification(-1, 'Grab tags', 'No tags. Please retry!');
-        }
+        _findHashTagFromScreenShot().then((hashTag) {
+          if (hashTag != null) {
+            _copyToClipboard(hashTag);
+            AppNotification().showNotification(-1, 'Grab tags', 'Paste copied tags!');
+          } else {
+            AppNotification().showNotification(-1, 'Grab tags', 'No tags. Please retry!');
+          }
+        });
       }
     });
   }

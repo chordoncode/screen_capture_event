@@ -26,28 +26,36 @@ class _CopyButtonWidgetState extends State<CopyButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          if (PaymentService.instance.isPro()) {
-            final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
-            _interstitialAdWidget.init(context);
-          }
+    return SizedBox(
+      height: 20,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            primary: Colors.blueAccent, // background
+          ),
+          onPressed: () {
+            if (!PaymentService.instance.isPro()) {
+              final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
+              _interstitialAdWidget.init(context);
+            }
 
-          _copyToClipboard().then((value) {
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    content: Text('Copied successfully!'),
-                    duration: Duration(seconds: 2)
-                ));
-          });
-        },
-        child: const Text(
+            _copyToClipboard().then((value) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text('Copied successfully!', style: TextStyle(color: Colors.pinkAccent)),
+                      duration: Duration(seconds: 2)
+                  ));
+            });
+          },
+          child: const Text(
             'COPY',
             style: TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.bold)
-        )
+              color: Colors.white, fontSize: 10,
+            )
+          )
+      )
     );
   }
 

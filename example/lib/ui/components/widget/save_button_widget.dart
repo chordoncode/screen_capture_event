@@ -1,56 +1,91 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_observer/Observable.dart';
+import 'package:flutter_observer/Observer.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
 import 'package:screen_capture_event_example/repositories/hashtag_repository.dart';
 
 class SaveButtonWidget extends StatefulWidget {
   final HashTag hashTag;
-  final bool enabled;
 
-  const SaveButtonWidget({Key? key, required this.hashTag, required this.enabled}) : super(key: key);
+  const SaveButtonWidget({Key? key, required this.hashTag}) : super(key: key);
 
   @override
   _SaveButtonWidgetState createState() => _SaveButtonWidgetState();
 }
 
-class _SaveButtonWidgetState extends State<SaveButtonWidget> {
+class _SaveButtonWidgetState extends State<SaveButtonWidget> with Observer {
+  late HashTag _hashTag;
+  bool _enabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _hashTag = widget.hashTag;
+    Observable.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    Observable.instance.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.enabled) {
-      return GestureDetector(
-          onTap: () {
-            _update();
+    return SizedBox(
+        height: 20,
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              primary: _enabled ? Colors.white : Colors.grey,
+              onPrimary: Colors.grey
+            ),
+            onPressed: () {
+              if (_enabled) {
+                _enabled  = false;
+                _update();
 
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    content: Text('Saved successfully!'),
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Saved successfully!', style: TextStyle(color: Colors.pinkAccent)),
                     duration: Duration(seconds: 2)
-                ));
-          },
-          child: const Text(
+                  ));
+
+                setState((){});
+              }
+            },
+            child: Text(
               'SAVE',
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold)
-          )
-      );
-    }
-    return const Text(
-        'SAVE',
-        style: TextStyle(
-            color: Colors.grey,
-            fontSize: 12,
-            fontWeight: FontWeight.bold)
+                color: _enabled ? Colors.blueAccent : Colors.white,
+                fontSize: 10,)
+            )
+        )
     );
   }
 
   void _update() {
     // save widget.hashTag to local DB.
     HashTagRepository.update({
-      'tags': widget.hashTag.tags
-    }, widget.hashTag.id);
-    Observable.instance.notifyObservers(["_HashTagComponentState"], notifyName : "saved", map: {});
+      'tags': _hashTag.tags,
+      'title': _hashTag.title,
+    }, widget.hashTag.id, true);
+  }
+
+  @override
+  update(Observable observable, String? notifyName, Map? map) {
+    if (notifyName == 'titleChanged') {
+      setState(() {
+        _hashTag = HashTag.updateTitle(_hashTag, map!['hashTag'].title);
+        _enabled = true;
+      });
+    } else if (notifyName == 'removed') {
+      setState(() {
+        _hashTag = HashTag.updateTags(_hashTag, map!['hashTag'].tags);
+        _enabled = true;
+      });
+    }
   }
 }

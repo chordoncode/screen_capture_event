@@ -68,9 +68,6 @@ class HashTagDb {
   Future<void> update(final HashTagTable table, final Map<String, dynamic> data, final String where, final List whereArgs) async {
     final Database db = await database;
 
-    final int now = TimeUtils.nowForMillisecondsSinceEpoch();
-    data['modified_date'] = now;
-
     await db.update(
       table.tableName(),
       data,

@@ -34,42 +34,69 @@ class _EditButtonWidgetState extends State<EditButtonWidget> {
             'PRO', style: TextStyle(fontSize: 6, color: Colors.white)),
       ),
       const SizedBox(width: 2,),
-      GestureDetector(
-        onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => Layout(currentIndex: 1, fromOnBoardingPage: false)));
-        },
-        child: const Text(
-          'EDIT',
-          style: TextStyle(
-              color: Colors.grey,
-              fontSize: 12,
-              fontWeight: FontWeight.bold
-          )
-        ),
-      )
+      _getButtonForNonPro()
     ];
   }
 
   List<Widget> _buildForPro() {
     return [
-      GestureDetector(
-          onTap: () async {
-            await Navigator.push(context,
-                MaterialPageRoute(builder: (context) => EditHashTagPage(hashTagId: widget.hashTag.id)));
-            setState(() {
-              widget.callback();
-            });
-          },
-          child: const Text(
+      _getButtonForPro()
+    ];
+  }
+
+  Widget _getButtonForNonPro() {
+    return SizedBox(
+        height: 20,
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              primary: Colors.grey, // background
+            ),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Layout(currentIndex: 1, fromOnBoardingPage: false)));
+            },
+            child: const Text(
               'EDIT',
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold
+                  fontSize: 10
               )
+            )
+        )
+    );
+  }
+
+  Widget _getButtonForPro() {
+    return SizedBox(
+      height: 20,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            primary: Colors.white, // background
+          ),
+          onPressed: () async {
+            await Navigator.push(context,
+                MaterialPageRoute(builder: (context) => EditHashTagPage(hashTagId: widget.hashTag.id)));
+
+            if (PaymentService.instance.isPro()) {
+              setState(() {
+                widget.callback();
+              });
+            }
+          },
+          child: const Text(
+            'EDIT',
+            style: TextStyle(
+              color: Colors.blueAccent,
+              fontSize: 10
+            )
           )
-      ),
-    ];
+      )
+    );
   }
 }

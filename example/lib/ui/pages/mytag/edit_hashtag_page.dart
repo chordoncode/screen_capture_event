@@ -70,21 +70,21 @@ class _EditHashTagPageState extends LifecycleWatcherState<EditHashTagPage> {
 
   Widget buildEmptyResult() {
     return Container(
-        alignment: Alignment.center,
-        child: EmptyWidget(
-          image: null,
-          packageImage: PackageImage.Image_1,
-          title: 'No hash tag',
-          titleTextStyle: const TextStyle(
-            fontSize: 22,
-            color: Color(0xff9da9c7),
-            fontWeight: FontWeight.w500,
-          ),
-          subtitleTextStyle: const TextStyle(
-            fontSize: 14,
-            color: Color(0xffabb8d6),
-          ),
-        )
+      alignment: Alignment.center,
+      child: EmptyWidget(
+        image: null,
+        packageImage: PackageImage.Image_1,
+        title: 'No hash tag',
+        titleTextStyle: const TextStyle(
+          fontSize: 22,
+          color: Color(0xff9da9c7),
+          fontWeight: FontWeight.w500,
+        ),
+        subtitleTextStyle: const TextStyle(
+          fontSize: 14,
+          color: Color(0xffabb8d6),
+        ),
+      )
     );
   }
 

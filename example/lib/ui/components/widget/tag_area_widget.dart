@@ -18,7 +18,6 @@ class _TagAreaWidgetState extends State<TagAreaWidget> {
   @override
   void initState() {
     super.initState();
-
     _tags = widget.hashTag.tags.split(" ");
   }
 
@@ -46,14 +45,15 @@ class _TagAreaWidgetState extends State<TagAreaWidget> {
                 if (_tags.length == 1) {
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                          content: Text('You cannot remove all hash tags.'),
-                          duration: Duration(seconds: 2)
+                        content: Text('You cannot remove all hash tags.', style: TextStyle(color: Colors.pinkAccent)),
+                        duration: Duration(seconds: 2)
                       ));
                 } else {
                   _tags.removeAt(index);
 
-                  final HashTag newHashTag = HashTag.buildNew(widget.hashTag.id, _tags);
+                  final HashTag newHashTag = HashTag.buildFromExisting(widget.hashTag, _tags);
                   Observable.instance.notifyObservers(["_HashTagComponentState"], notifyName : "removed", map: {"hashTag": newHashTag});
+                  Observable.instance.notifyObservers(["_SaveButtonWidgetState"], notifyName : "removed", map: {"hashTag": newHashTag});
                   Observable.instance.notifyObservers(["_UneditableHashTagComponentState"], notifyName : "removed", map: {"hashTag": newHashTag});
                 }
               });

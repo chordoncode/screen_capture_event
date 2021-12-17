@@ -10,7 +10,8 @@ class HashTag {
   final bool favorite;
 
   HashTag({required this.id, required this.createdDateTime, required this.modifiedDateTime, required this.title, required this.tags, required this.favorite});
-  
+
+
   static HashTag buildNew(final int id, final List<String> tags) {
     return HashTag(
       id: id,
@@ -22,14 +23,47 @@ class HashTag {
     );
   }
 
+  static HashTag buildFromExisting(final HashTag hashTag, final List<String> tags) {
+    return HashTag(
+        id: hashTag.id,
+        createdDateTime: hashTag.createdDateTime,
+        modifiedDateTime: hashTag.modifiedDateTime,
+        title: hashTag.title,
+        tags: tags.join(" "),
+        favorite: hashTag.favorite
+    );
+  }
+
   static HashTag buildFrom(final HashTagEntity hashTagEntity) {
     return HashTag(
         id: hashTagEntity.hashtagId,
         createdDateTime: hashTagEntity.createdDate,
         modifiedDateTime: hashTagEntity.modifiedDate,
-        title: "-",
+        title: hashTagEntity.title,
         tags: hashTagEntity.tags,
         favorite: hashTagEntity.favorite
+    );
+  }
+
+  static HashTag updateTitle(final HashTag hashTag, final String title) {
+    return HashTag(
+        id: hashTag.id,
+        createdDateTime: hashTag.createdDateTime,
+        modifiedDateTime: hashTag.modifiedDateTime,
+        title: title,
+        tags: hashTag.tags,
+        favorite: hashTag.favorite
+    );
+  }
+
+  static HashTag updateTags(final HashTag hashTag, final String tags) {
+    return HashTag(
+        id: hashTag.id,
+        createdDateTime: hashTag.createdDateTime,
+        modifiedDateTime: hashTag.modifiedDateTime,
+        title: hashTag.title,
+        tags: tags,
+        favorite: hashTag.favorite
     );
   }
 }

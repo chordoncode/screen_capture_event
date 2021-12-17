@@ -49,7 +49,7 @@ class _UneditableHashTagComponentState extends State<UneditableHashTagComponent>
                   Row(
                       children: [
                         CopyButtonWidget(hashTag: _hashTag),
-                        const SizedBox(width: 15,),
+                        const SizedBox(width: 5,),
                         EditButtonWidget(hashTag: _hashTag, callback: widget.callback)
                       ]
                   )

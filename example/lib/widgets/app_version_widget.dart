@@ -56,8 +56,8 @@ class AppVersionWidget extends StatelessWidget {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text('There is something wrong to update. Please try again.'),
-              duration: Duration(seconds: 2)
+            content: Text('Please try again.', style: TextStyle(color: Colors.pinkAccent)),
+            duration: Duration(seconds: 2)
           ));
     }
   }
