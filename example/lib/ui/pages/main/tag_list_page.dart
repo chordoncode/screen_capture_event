@@ -6,6 +6,7 @@ import 'package:neon/neon.dart';
 import 'package:screen_capture_event_example/common/ad/banner_ad_widget.dart';
 import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
+import 'package:screen_capture_event_example/common/util/file_utils.dart';
 import 'package:screen_capture_event_example/common/util/time_utils.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
 import 'package:screen_capture_event_example/repositories/hashtag_repository.dart';
@@ -66,7 +67,7 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
         image: null,
         packageImage: PackageImage.Image_1,
         title: 'No hash tags',
-        subTitle: 'Grab hash tags from Instagram!',
+        subTitle: 'Grab hash tags!',
         titleTextStyle: const TextStyle(
           fontSize: 22,
           color: Color(0xff9da9c7),

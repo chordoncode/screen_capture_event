@@ -1,5 +1,6 @@
 import 'package:screen_capture_event_example/common/sqlite/hashtag_db.dart';
 import 'package:screen_capture_event_example/common/sqlite/hashtag_table.dart';
+import 'package:screen_capture_event_example/common/util/file_utils.dart';
 import 'package:screen_capture_event_example/common/util/time_utils.dart';
 
 class HashTagRepository {
@@ -8,7 +9,7 @@ class HashTagRepository {
 
   static Future<int> save(final Map<String, dynamic> data) async {
     data['favorite'] = 0;
-    data['title'] = 'copied from Instagram';
+    data['title'] = 'copied from ' +  FileUtils.getCurrentApp();
 
     return await HashTagDb().insert(TABLE, data);
   }
