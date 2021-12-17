@@ -25,7 +25,7 @@ class HashTagDb {
   HashTagDb._internal();
 
   Future<Database> _init() async {
-    await _deleteDB_temp();
+    //await _deleteDB_temp();
 
     return await openDatabase(
       join(await getDatabasesPath(), DB_NAME),

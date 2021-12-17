@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:move_to_background/move_to_background.dart';
 import 'package:screen_capture_event_example/common/capture/hashtag_capture_event.dart';
@@ -27,9 +28,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
     WidgetsBinding.instance!
         .addPostFrameCallback((_) => _executeAfterWholeBuildProcess(context));
 
-    final ButtonStyle actionStyle =
-    TextButton.styleFrom(primary: Theme.of(context).colorScheme.onPrimary);
-
     return AppBar(
       elevation: 0,
       iconTheme: const IconThemeData(color: Colors.green),
@@ -38,22 +36,60 @@ class _CustomAppBarState extends State<CustomAppBar> {
           style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
       ),
       backgroundColor: Colors.grey.shade900,
-      actions: widget.hasActions ? [
+      actions: widget.hasActions ? buildActions() : [],
+    );
+  }
+
+  List<Widget> buildActions() {
+    final ButtonStyle actionStyle = TextButton.styleFrom(primary: Theme.of(context).colorScheme.onPrimary);
+
+    List<Widget> actions = [];
+
+    if (!activated) {
+      actions.add(
+        Badge(
+          padding: const EdgeInsets.all(8),
+          position: BadgePosition.topStart(top: 0),
+          animationDuration: const Duration(milliseconds: 500),
+          animationType: BadgeAnimationType.scale,
+          badgeContent: const Text(
+              '!',
+              style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white, )
+          ),
+          badgeColor: Colors.pinkAccent,
+          child: TextButton(
+            style: actionStyle,
+            onPressed: () {
+              setState(() {
+                activated = !activated;
+                _activate();
+              });
+            },
+            child: const Text(
+              'Activate',
+              style: TextStyle(color: Color.fromRGBO(250, 139, 97, 1))
+            ),
+          )
+        )
+      );
+    } else {
+      actions.add(
         TextButton(
           style: actionStyle,
           onPressed: () {
             setState(() {
               activated = !activated;
-              activated ? _activate() : _deactivate();
+              deactivate();
             });
           },
-          child: Text(
-              activated ? 'Deactivate' : 'Activate',
-              style: const TextStyle(color: Color.fromRGBO(250, 139, 97, 1))
+          child: const Text(
+            'Deactivate',
+            style: TextStyle(color: Color.fromRGBO(250, 139, 97, 1))
           ),
-        ),
-      ] : [],
-    );
+        )
+      );
+    }
+    return actions;
   }
 
   void _activate() {

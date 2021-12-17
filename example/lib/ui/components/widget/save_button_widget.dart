@@ -81,7 +81,7 @@ class _SaveButtonWidgetState extends State<SaveButtonWidget> with Observer {
         _hashTag = HashTag.updateTitle(_hashTag, map!['hashTag'].title);
         _enabled = true;
       });
-    } else if (notifyName == 'removed') {
+    } else if (notifyName == 'removed' || notifyName == 'added') {
       setState(() {
         _hashTag = HashTag.updateTags(_hashTag, map!['hashTag'].tags);
         _enabled = true;

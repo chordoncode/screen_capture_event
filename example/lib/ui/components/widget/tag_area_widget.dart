@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_observer/Observable.dart';
+import 'package:flutter_observer/Observer.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
 
@@ -12,13 +13,21 @@ class TagAreaWidget extends StatefulWidget {
   _TagAreaWidgetState createState() => _TagAreaWidgetState();
 }
 
-class _TagAreaWidgetState extends State<TagAreaWidget> {
+class _TagAreaWidgetState extends State<TagAreaWidget> with Observer {
   List<String> _tags = [];
 
   @override
   void initState() {
     super.initState();
+    Observable.instance.addObserver(this);
+
     _tags = widget.hashTag.tags.split(" ");
+  }
+
+  @override
+  void dispose() {
+    Observable.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -64,5 +73,28 @@ class _TagAreaWidgetState extends State<TagAreaWidget> {
         );
       },
     );
+  }
+
+  @override
+  update(Observable observable, String? notifyName, Map? map) {
+    if (notifyName == 'added') {
+      String newHashTagString = map!['newHashTag'];
+      if (_tags.contains(newHashTagString)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text('Found duplications', style: TextStyle(color: Colors.pinkAccent)),
+                duration: Duration(seconds: 2)
+            )
+        );
+
+      } else {
+        _tags.add(newHashTagString);
+      }
+
+      setState(() {
+        final HashTag newHashTag = HashTag.buildFromExisting(widget.hashTag, _tags);
+        Observable.instance.notifyObservers(["_SaveButtonWidgetState"], notifyName : "added", map: {"hashTag": newHashTag});
+      });
+    }
   }
 }

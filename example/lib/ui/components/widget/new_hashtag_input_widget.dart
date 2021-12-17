@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_observer/Observable.dart';
 
 class NewHashTagInputWidget extends StatefulWidget {
 
@@ -26,10 +27,7 @@ class _NewHashTagInputWidgetState extends State<NewHashTagInputWidget> {
           FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9(_)ㄱ-ㅎㅏ-ㅣ가-힣\\s]')),
         ],
         onChanged: (text) {
-          if (text.startsWith("_")) {
-
-          }
-          _onChanged();
+          _onChanged(text);
         },
         maxLength: 30,
         style: const TextStyle(color: Colors.blueGrey, fontSize: 15),
@@ -38,13 +36,27 @@ class _NewHashTagInputWidgetState extends State<NewHashTagInputWidget> {
           labelStyle: TextStyle(color: Colors.white),
           counterStyle: TextStyle(color: Colors.white, fontSize: 8),
           errorStyle: TextStyle(color: Colors.red, fontSize: 8),
-          labelText: 'Enter a new hash tag without #'
+          labelText: 'Enter a new hash tag without # and space'
         ),
       ),
       padding: const EdgeInsets.all(10.0),
     );
   }
 
-  void _onChanged() {
+  void _onChanged(String text) {
+    if (text.startsWith("_") || text.startsWith(" ")) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please start with a valid letter', style: TextStyle(color: Colors.pinkAccent)),
+          duration: Duration(seconds: 2)
+        )
+      );
+      _inputController.clear();
+
+    } else if (text.endsWith(" ")) {
+      final String newHashTag = '#' + _inputController.text.trim();
+      Observable.instance.notifyObservers(["_TagAreaWidgetState"], notifyName : "added", map: {"newHashTag": newHashTag});
+      _inputController.clear();
+    }
   }
 }

@@ -26,14 +26,6 @@ class _EditButtonWidgetState extends State<EditButtonWidget> {
 
   List<Widget> _buildForNonPro() {
     return [
-      Badge(
-        shape: BadgeShape.square,
-        badgeColor: Colors.pinkAccent,
-        borderRadius: BorderRadius.circular(8),
-        badgeContent: const Text(
-            'PRO', style: TextStyle(fontSize: 6, color: Colors.white)),
-      ),
-      const SizedBox(width: 2,),
       _getButtonForNonPro()
     ];
   }
@@ -58,15 +50,23 @@ class _EditButtonWidgetState extends State<EditButtonWidget> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Layout(currentIndex: 1, fromOnBoardingPage: false)));
             },
-            child: const Text(
-              'EDIT',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 10
-              )
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text(
+                  'EDIT',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10
+                  )
+                ),
+                SizedBox(width: 2,),
+                Text('PRO', style: TextStyle(fontSize: 8, color: Colors.pinkAccent, fontWeight: FontWeight.bold)),
+              ],
             )
-        )
-    );
+
+          )
+        );
   }
 
   Widget _getButtonForPro() {
