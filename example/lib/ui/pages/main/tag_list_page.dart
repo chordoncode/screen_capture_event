@@ -1,6 +1,8 @@
+import 'package:badges/badges.dart';
 import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:icon_animator/icon_animator.dart';
+import 'package:neon/neon.dart';
 import 'package:screen_capture_event_example/common/ad/banner_ad_widget.dart';
 import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
@@ -8,6 +10,7 @@ import 'package:screen_capture_event_example/common/util/time_utils.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
 import 'package:screen_capture_event_example/repositories/hashtag_repository.dart';
 import 'package:screen_capture_event_example/ui/components/uneditable_hashtag_component.dart';
+import 'package:screen_capture_event_example/ui/pages/main/layout.dart';
 import 'package:screen_capture_event_example/widgets/center_indicator.dart';
 import 'package:screen_capture_event_example/widgets/dismissible_background.dart';
 import 'package:screen_capture_event_example/widgets/list_expandable_widget.dart';
@@ -97,6 +100,50 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
 
     if (!PaymentService.instance.isPro()) {
       widgets.add(const BannerAdWidget());
+      widgets.add(const SizedBox(height: 20,));
+      widgets.add(
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Badge(
+                      shape: BadgeShape.square,
+                      badgeColor: Colors.pinkAccent,
+                      borderRadius: BorderRadius.circular(8),
+                      badgeContent: const Text(
+                          'PRO', style: TextStyle(fontSize: 10, color: Colors.white)),
+                    ),
+                    const SizedBox(width: 5,),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => Layout(currentIndex: 1, fromOnBoardingPage: false)));
+                        },
+                        child: Neon(
+                          text: "Subscribe",
+                          color: Colors.green,
+                          fontSize: 15,
+                          font: NeonFont.Membra,
+                          flickeringText: true,
+                          flickeringLetters: const [0,1],
+                        )
+                    )
+                  ]
+              ),
+              const SizedBox(height: 5,),
+              const Text(
+                "Currently you can see the latest 3 hash tags.",
+                style: TextStyle(fontSize: 12, color: Colors.pinkAccent)
+              )
+            ]
+          )
+        )
+      );
+      widgets.add(const SizedBox(height: 20,));
     }
     widgets.add(
       Expanded(
@@ -211,7 +258,11 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
   }
 
   Future<List<HashTag>> _getHashTagList() async {
-    final List<HashTagEntity> hashTagEntities = await HashTagRepository.getHashTags();
+    List<HashTagEntity> hashTagEntities = await HashTagRepository.getHashTags();
+
+    if (!PaymentService.instance.isPro()) {
+      hashTagEntities = hashTagEntities.take(3).toList();
+    }
     return hashTagEntities.map((e) => HashTag.buildFrom(e)).toList();
 
   }

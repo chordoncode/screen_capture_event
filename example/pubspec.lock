@@ -345,6 +345,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  neon:
+    dependency: "direct main"
+    description:
+      name: neon
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   nested:
     dependency: transitive
     description:

@@ -92,11 +92,4 @@ class _EditHashTagPageState extends LifecycleWatcherState<EditHashTagPage> {
     HashTagEntity hashTagEntity = await HashTagRepository.getHashTag(widget.hashTagId);
     return HashTag.buildFrom(hashTagEntity);
   }
-
-  Future<int> _save(List<String> tags) async {
-    // save widget.hashTag to local DB.
-    return HashTagRepository.save({
-      'tags': tags.join(" ")
-    });
-  }
 }
