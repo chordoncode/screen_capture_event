@@ -13,14 +13,12 @@ class NewHashTagInputWidget extends StatefulWidget {
 class _NewHashTagInputWidgetState extends State<NewHashTagInputWidget> {
   final TextEditingController _inputController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
+  String getValue() {
+    return _inputController.text;
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       child: TextField(
         inputFormatters: [

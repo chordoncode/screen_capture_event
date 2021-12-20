@@ -28,14 +28,15 @@ class HashTagCaptureEvent {
   void _addScreenShotListener() {
     _screenCaptureEvent.addScreenShotListener((filePath) async {
 
-      if (FileUtils.isTarget(filePath)) {
-        //Bringtoforeground.bringAppToForeground();
-        captured = true;
+      //Bringtoforeground.bringAppToForeground();
+      captured = true;
 
-        if (!PaymentService.instance.isPro()) {
-          Bringtoforeground.bringAppToForeground();
-        }
+      if (!PaymentService.instance.isPro()) {
+        Bringtoforeground.bringAppToForeground();
+      }
 
+      final bool isTargetForNonPro = FileUtils.isTargetForNonPro(FileUtils.getLastScreenShot().path);
+      if (PaymentService.instance.isPro() || isTargetForNonPro) {
         _findHashTagFromScreenShot().then((hashTag) {
           if (hashTag != null) {
             _copyToClipboard(hashTag);
@@ -44,6 +45,8 @@ class HashTagCaptureEvent {
             AppNotification().showNotification(-1, 'Grab tags', 'No tags. Please retry!');
           }
         });
+      } else {
+        AppNotification().showNotification(-1, 'Grab tags', 'Subscribe to grab tags from here');
       }
     });
   }

@@ -44,10 +44,10 @@ class _SettingPageState extends LifecycleWatcherState<SettingPage> {
     List<Widget> widgets = [];
     widgets.add(const SizedBox(height: 10,));
 
-    if (PaymentService.instance.isPro()) {
+    if (!PaymentService.instance.isPro()) {
       widgets.add(const BannerAdWidget());
-      widgets.add(const SizedBox(height: 10,));
     }
+    widgets.add(const SizedBox(height: 10,));
     widgets.add(
       Expanded(
         child: ListView.separated(

@@ -9,11 +9,11 @@ class FileUtils {
     return BASE_DIR.listSync().last;
   }
 
-  static bool isTarget(final String path) {
+  static bool isTargetForNonPro(final String path) {
     if (!PaymentService.instance.isPro()) {
       return path.toLowerCase().contains("instagram");
     }
-   return true;
+    return true;
   }
 
   static String getCurrentApp() {

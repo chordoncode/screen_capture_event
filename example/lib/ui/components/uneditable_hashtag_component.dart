@@ -10,8 +10,9 @@ import 'package:screen_capture_event_example/ui/components/widget/tag_area_widge
 class UneditableHashTagComponent extends StatefulWidget {
   final HashTag hashTag;
   final Function callback;
+  final int index;
 
-  const UneditableHashTagComponent({Key? key, required this.hashTag, required this.callback}) : super(key: key);
+  const UneditableHashTagComponent({Key? key, required this.hashTag, required this.callback, required this.index}) : super(key: key);
 
   @override
   _UneditableHashTagComponentState createState() => _UneditableHashTagComponentState();
@@ -47,16 +48,16 @@ class _UneditableHashTagComponentState extends State<UneditableHashTagComponent>
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Row(
-                      children: [
-                        CopyButtonWidget(hashTag: _hashTag),
-                        const SizedBox(width: 5,),
-                        EditButtonWidget(hashTag: _hashTag, callback: widget.callback)
-                      ]
+                    children: [
+                      CopyButtonWidget(hashTag: _hashTag, index: widget.index),
+                      const SizedBox(width: 5,),
+                      EditButtonWidget(hashTag: _hashTag, callback: widget.callback, index: widget.index)
+                    ]
                   )
                 ],
               ),
               SizedBox(height: 10.h),
-              TagAreaWidget(hashTag: _hashTag)
+              TagAreaWidget(hashTag: _hashTag, editMode: false)
             ],
           )
           ),

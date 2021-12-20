@@ -40,8 +40,7 @@ abstract class LifecycleWatcherState<T extends StatefulWidget> extends State<T>
 
   Future<void> onResumed() async {
 
-    final bool isTarget = FileUtils.isTarget(FileUtils.getLastScreenShot().path);
-    if (isTarget && captured) {
+    if (captured) {
       captured = false;
 
       if (!PaymentService.instance.isPro()) {

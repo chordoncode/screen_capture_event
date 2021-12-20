@@ -52,7 +52,7 @@ class _HashTagComponentState extends State<HashTagComponent> with Observer {
                   TagDateWidget(hashTag: _hashTag),
                   Row(
                       children: [
-                        CopyButtonWidget(hashTag: _hashTag),
+                        CopyButtonWidget(hashTag: _hashTag, index: 0),
                         const SizedBox(width: 5,),
                         SaveButtonWidget(hashTag: _hashTag)
                       ]
@@ -61,9 +61,9 @@ class _HashTagComponentState extends State<HashTagComponent> with Observer {
               ),
               TitleInputWidget(hashTag: _hashTag),
               SizedBox(height: 10.h),
-              TagAreaWidget(hashTag: _hashTag),
+              TagAreaWidget(hashTag: _hashTag, editMode: true,),
               SizedBox(height: 10.h),
-              NewHashTagInputWidget()
+              const NewHashTagInputWidget()
             ],
           )
           ),
@@ -74,7 +74,7 @@ class _HashTagComponentState extends State<HashTagComponent> with Observer {
 
   @override
   update(Observable observable, String? notifyName, Map? map) {
-    if (notifyName == 'removed') {
+    if (notifyName == 'added' || notifyName == 'removed' || notifyName == 'updated') {
       setState(() {
         _hashTag = map!['hashTag'];
       });

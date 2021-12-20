@@ -13,7 +13,7 @@ class InterstitialAdWidget {
     'android': 'ca-app-pub-9201118486372073/4083964131',
   }
       : {
-    'ios': 'ca-app-pub-3940256099942544/2934735716',
+    'ios': 'ca-app-pub-3940256099942544/4411468910',
     'android': 'ca-app-pub-3940256099942544/1033173712',
   };
   static const int maxFailedLoadAttempts = 3;

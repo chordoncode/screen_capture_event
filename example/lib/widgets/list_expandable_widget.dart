@@ -23,12 +23,15 @@ class ListExpandableWidget extends StatefulWidget {
   // optional widget for collapse Icon. Default value is `Icon(Icons.keyboard_arrow_right)`
   final Widget collapsedIcon;
 
+  final GestureTapCallback? onExpanded;
+  final GestureTapCallback? onCollapsed;
+
   ListExpandableWidget(
       { this.isExpanded = false,
         required this.header,
         required this.items,
         this.expandedIcon = const Icon(Icons.keyboard_arrow_down),
-        this.collapsedIcon = const Icon(Icons.keyboard_arrow_right)});
+        this.collapsedIcon = const Icon(Icons.keyboard_arrow_right), this.onExpanded, this.onCollapsed});
 
   @override
   _ListExpandableWidgetState createState() => _ListExpandableWidgetState();
@@ -44,7 +47,16 @@ class _ListExpandableWidgetState extends State<ListExpandableWidget> {
   }
 
   void _updateExpandState(bool isExpanded) =>
-      setState(() => _isExpanded = isExpanded);
+      setState(() {
+        _isExpanded = isExpanded;
+
+        if (isExpanded) {
+          widget.onExpanded!();
+        } else {
+          widget.onCollapsed!();
+        }
+      }
+    );
 
   @override
   Widget build(BuildContext context) {
