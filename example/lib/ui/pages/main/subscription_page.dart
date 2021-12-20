@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:screen_capture_event_example/common/ad/banner_ad_widget.dart';
 import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
 import 'package:screen_capture_event_example/widgets/button/custom_buttons.dart';
@@ -40,39 +41,7 @@ class _SubscriptionPageState extends LifecycleWatcherState<SubscriptionPage> {
           ),
         ),
         child: ListView(
-          children: [
-            const SizedBox(height: 20,),
-            Padding(
-                padding: const EdgeInsets.only(
-                    left: 32, right: 32, top: 10, bottom: 10),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SimpleElevatedButtonWithIcon(
-                        label: Column(children: [
-                          Text(
-                            PaymentService.instance.isPro() ? "Already subscribed" : "Subscribe",
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.white),),
-                          const SizedBox(height: 5,),
-                          Text(
-                            PaymentService.instance.isPro() ? "Manage my subscription" : buildPriceInfo(),
-                            style: const TextStyle(fontSize: 15, color: Colors.white),)
-                        ]),
-                        iconData: PaymentService.instance.isPro() ? Icons.check : Icons.monetization_on_outlined,
-                        color: PaymentService.instance.isPro() ? Colors.blueAccent : Colors.greenAccent,
-                        onPressed: () {
-                          if (PaymentService.instance.isPro()) {
-                            launch('https://play.google.com/store/account/subscriptions');
-                          } else {
-                            PaymentService.instance.buyProduct(PaymentService.instance.getProducts().first);
-                          }
-                        },
-                      )
-                    ]
-                )
-            ),
-          ],
+          children: _buildWidget()
         ) /* add child content here */,
       );
     } else {
@@ -90,7 +59,48 @@ class _SubscriptionPageState extends LifecycleWatcherState<SubscriptionPage> {
     }
   }
 
-  buildPriceInfo() {
+  List<Widget> _buildWidget() {
+    List<Widget> widgets = [];
+    widgets.add(const SizedBox(height: 10,));
+
+    if (!PaymentService.instance.isPro()) {
+      widgets.add(const BannerAdWidget());
+    }
+    widgets.add(const SizedBox(height: 20,));
+    widgets.add(Padding(
+        padding: const EdgeInsets.only(left: 32, right: 32, top: 10, bottom: 10),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SimpleElevatedButtonWithIcon(
+                label: Column(children: [
+                  Text(
+                    PaymentService.instance.isPro() ? "Already subscribed" : "Subscribe",
+                    style: const TextStyle(
+                        fontSize: 20, color: Colors.white),),
+                  const SizedBox(height: 5,),
+                  Text(
+                    PaymentService.instance.isPro() ? "Manage my subscription" : _buildPriceInfo(),
+                    style: const TextStyle(fontSize: 15, color: Colors.white),)
+                ]),
+                iconData: PaymentService.instance.isPro() ? Icons.check : Icons.monetization_on_outlined,
+                color: PaymentService.instance.isPro() ? Colors.blueAccent : Colors.greenAccent,
+                onPressed: () {
+                  if (PaymentService.instance.isPro()) {
+                    launch('https://play.google.com/store/account/subscriptions');
+                  } else {
+                    PaymentService.instance.buyProduct(PaymentService.instance.getProducts().first);
+                  }
+                },
+              )
+            ]
+        )
+      )
+    );
+    return widgets;
+  }
+
+  _buildPriceInfo() {
     final ProductDetails productDetails = PaymentService.instance.getProducts().first;
     return productDetails.price + " / 1month" ;
   }

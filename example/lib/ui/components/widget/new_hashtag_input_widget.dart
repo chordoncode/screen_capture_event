@@ -44,16 +44,21 @@ class _NewHashTagInputWidgetState extends State<NewHashTagInputWidget> {
   }
 
   void _onChanged(String text) {
-    if (text.startsWith("_") || text.startsWith(" ")) {
+    final RegExp regexp = RegExp(r"([a-zA-Z0-9(_)ㄱ-ㅎㅏ-ㅣ가-힣]{1,})");
+    final Iterable<RegExpMatch> allMatches = regexp.allMatches(text);
+
+    if (allMatches.length > 1) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please start with a valid letter', style: TextStyle(color: Colors.pinkAccent)),
-          duration: Duration(seconds: 2)
-        )
+          const SnackBar(
+              content: Text('Please enter valid letters', style: TextStyle(color: Colors.pinkAccent)),
+              duration: Duration(seconds: 2)
+          )
       );
       _inputController.clear();
+      return;
+    }
 
-    } else if (text.endsWith(" ")) {
+    if (text.endsWith(" ")) {
       final String newHashTag = '#' + _inputController.text.trim();
       Observable.instance.notifyObservers(["_TagAreaWidgetState"], notifyName : "added", map: {"newHashTag": newHashTag});
       _inputController.clear();

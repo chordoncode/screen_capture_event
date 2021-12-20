@@ -41,9 +41,9 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
           }
           if (snapshot.data!.isEmpty) {
             return Container(
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: _getWidgetsForEmpty()
                 )
             );
@@ -60,7 +60,7 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
 
     if (!PaymentService.instance.isPro()) {
       widgets.add(const BannerAdWidget());
-      widgets.add(const SizedBox(height: 10,));
+      widgets.add(const SizedBox(height: 30,));
     }
     widgets.add(
       EmptyWidget(
@@ -233,7 +233,7 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                    TimeUtils.toFormattedString(hashTag.modifiedDateTime, 'yyyy-MM-dd hh:mm'),
+                    TimeUtils.toFormattedString(hashTag.modifiedDateTime, 'yyyy-MM-dd HH:mm'),
                     style: const TextStyle(fontSize: 10, color: Colors.grey)
                 ),
                 const SizedBox(height: 5,),

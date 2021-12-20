@@ -79,7 +79,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           onPressed: () {
             setState(() {
               activated = !activated;
-              deactivate();
+              _deactivate();
             });
           },
           child: const Text(

@@ -13,7 +13,7 @@ class TagDateWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
-          TimeUtils.toFormattedString(hashTag.modifiedDateTime, 'yyyy-MM-dd hh:mm'),
+          TimeUtils.toFormattedString(hashTag.modifiedDateTime, 'yyyy-MM-dd HH:mm'),
           style: TextStyle(
             color: Colors.grey[500],
             fontSize: 10,
