@@ -43,11 +43,13 @@ abstract class LifecycleWatcherState<T extends StatefulWidget> extends State<T>
     if (captured) {
       captured = false;
 
+      /*
       if (!PaymentService.instance.isPro()) {
         Navigator.of(context).popUntil((route) => route.isFirst);
         await Navigator.push(context,
             MaterialPageRoute(builder: (context) => const InterstitialAdPage()));
       }
+      */
 
       AppNotification().cancelAllNotifications();
     }

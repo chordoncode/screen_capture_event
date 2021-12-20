@@ -140,7 +140,7 @@ class _SubscriptionPageState extends LifecycleWatcherState<SubscriptionPage> {
         flickeringText: true,
       ),
       const Text("Remove all Ads", style: TextStyle(color: Colors.white),),
-      const Text("Grab tags from instagram and other apps", style: TextStyle(color: Colors.white),),
+      const Text("Grab tags from other apps besides Instagram", style: TextStyle(color: Colors.white),),
       const Text("Copy & Manage tags without limitations", style: TextStyle(color: Colors.white),),
       const Text("Use new features without additional payment", style: TextStyle(color: Colors.white),),
     ];

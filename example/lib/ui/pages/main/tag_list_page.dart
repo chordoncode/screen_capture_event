@@ -62,47 +62,7 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
     if (!PaymentService.instance.isPro()) {
       widgets.add(const BannerAdWidget());
       widgets.add(const SizedBox(height: 20,));
-      widgets.add(
-          Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Badge(
-                            shape: BadgeShape.square,
-                            badgeColor: Colors.pinkAccent,
-                            borderRadius: BorderRadius.circular(8),
-                            badgeContent: const Text(
-                                'PRO', style: TextStyle(fontSize: 10, color: Colors.white)),
-                          ),
-                          const SizedBox(width: 5,),
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => Layout(currentIndex: 1, fromOnBoardingPage: false)));
-                              },
-                              child: Neon(
-                                text: "Subscribe",
-                                color: Colors.green,
-                                fontSize: 15,
-                                font: NeonFont.Membra,
-                                flickeringText: true,
-                              )
-                          )
-                        ]
-                    ),
-                    const SizedBox(height: 5,),
-                    const Text(
-                      "Subscribe to grab tags from other apps besides Instagram",
-                      style: TextStyle(fontSize: 12, color: Colors.pinkAccent)
-                    )
-                  ]
-              )
-          )
-      );
+      widgets.add(getWidgetForOtherApps());
       widgets.add(const SizedBox(height: 20,));
     }
     widgets.add(
@@ -125,6 +85,56 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
     return widgets;
   }
 
+  Padding getWidgetForOtherApps() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Badge(
+                  shape: BadgeShape.square,
+                  badgeColor: Colors.pinkAccent,
+                  borderRadius: BorderRadius.circular(8),
+                  badgeContent: const Text(
+                      'PRO', style: TextStyle(fontSize: 10, color: Colors.white)),
+                ),
+                const SizedBox(width: 5,),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Layout(currentIndex: 1, fromOnBoardingPage: false)));
+                    },
+                    child: Neon(
+                      text: "Subscribe",
+                      color: Colors.green,
+                      fontSize: 15,
+                      font: NeonFont.Membra,
+                      flickeringText: true,
+                    )
+                )
+              ]
+          ),
+          const SizedBox(height: 5,),
+          const Text(
+            "✓ to remove all Ads",
+            style: TextStyle(fontSize: 12, color: Colors.pinkAccent)
+          ),
+          const Text(
+            "✓ to grab tags from other apps besides Instagram",
+            style: TextStyle(fontSize: 12, color: Colors.pinkAccent)
+          ),
+          const Text(
+              "✓ to copy & manage tags without limitations",
+              style: TextStyle(fontSize: 12, color: Colors.pinkAccent)
+          ),
+        ]
+    )
+    );
+  }
+
   Widget _getBody(List<HashTag> data) {
     return RefreshIndicator(
       onRefresh: () =>
@@ -144,6 +154,8 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
 
     if (!PaymentService.instance.isPro()) {
       widgets.add(const BannerAdWidget());
+      widgets.add(const SizedBox(height: 20,));
+      widgets.add(getWidgetForOtherApps());
       widgets.add(const SizedBox(height: 20,));
     }
     widgets.add(
