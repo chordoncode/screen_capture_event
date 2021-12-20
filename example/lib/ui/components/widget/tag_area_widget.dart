@@ -57,7 +57,7 @@ class _TagAreaWidgetState extends State<TagAreaWidget> with Observer {
               );
             }
           },
-          removeButton: ItemTagsRemoveButton(
+          removeButton: widget.editMode ? ItemTagsRemoveButton(
             size: 20,
             onRemoved: () {
               // Remove the item from the data source.
@@ -72,15 +72,15 @@ class _TagAreaWidgetState extends State<TagAreaWidget> with Observer {
                   _tags.removeAt(index);
 
                   final HashTag newHashTag = HashTag.buildFromExisting(widget.hashTag, _tags);
-                  Observable.instance.notifyObservers(["_HashTagComponentState"], notifyName : "modified", map: {"hashTag": newHashTag});
-                  Observable.instance.notifyObservers(["_SaveButtonWidgetState"], notifyName : "modified", map: {"hashTag": newHashTag});
-                  Observable.instance.notifyObservers(["_UneditableHashTagComponentState"], notifyName : "modified", map: {"hashTag": newHashTag});
+                  Observable.instance.notifyObservers(["_HashTagComponentState"], notifyName : "removed", map: {"hashTag": newHashTag});
+                  Observable.instance.notifyObservers(["_SaveButtonWidgetState"], notifyName : "removed", map: {"hashTag": newHashTag});
+                  Observable.instance.notifyObservers(["_UneditableHashTagComponentState"], notifyName : "removed", map: {"hashTag": newHashTag});
                 }
               });
               //required
               return true;
             },
-          )
+          ) : null
         );
       },
     );
