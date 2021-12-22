@@ -16,10 +16,7 @@ class SubMenuTile extends StatelessWidget {
       title: Row(children: [
         _subMenu.icon,
         const SizedBox(width: 5),
-        Text(
-          _subMenu.title,
-          style: const TextStyle(fontSize: 14, color: Colors.white)
-        )
+        _subMenu.title,
       ]),
       trailing: const Icon(
         Icons.keyboard_arrow_right,

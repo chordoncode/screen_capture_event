@@ -34,9 +34,16 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       elevation: 0,
       iconTheme: const IconThemeData(color: Colors.green),
-      title: Text(
-          widget.title != null ? widget.title! : 'Grab Tags',
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+      title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Image.asset('assets/images/app_icon.png', width: 25),
+            const SizedBox(width: 3,),
+            Text(
+              widget.title != null ? widget.title! : 'Grab Tags',
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+            ),
+          ]
       ),
       backgroundColor: Colors.grey.shade900,
       actions: widget.hasActions ? buildActions() : [],
@@ -96,7 +103,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   }
 
   void _activate() {
-    AppNotification().showNotification(-1, 'Grab tags', 'Grab tags has been activated.');
+    AppNotification().showNotification(-1, 'Grab Tags', 'Grab Tags has been activated.');
     HashTagCaptureEvent().screenCaptureEvent.watch();
 
     showPlatformDialog(
@@ -125,7 +132,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   }
 
   void _deactivate() {
-    AppNotification().showNotification(-1, 'Grab tags', 'Grab tags has been deactivated.');
+    AppNotification().showNotification(-1, 'Grab Tags', 'Grab Tags has been deactivated.');
     HashTagCaptureEvent().screenCaptureEvent.dispose();
   }
 

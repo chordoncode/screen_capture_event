@@ -11,6 +11,9 @@ class _OssLicensePageState extends LifecycleWatcherState<OssLicensePage> {
 
   @override
   Widget build(BuildContext context) {
-    return const LicensePage();
+    return LicensePage(
+      applicationName: "Grab Tags",
+      applicationIcon: Image.asset('assets/images/app_icon.png', width: 30),
+    );
   }
 }

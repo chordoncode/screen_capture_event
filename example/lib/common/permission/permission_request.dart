@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionRequest {
-  static Future<bool> requestCameraPermission(BuildContext context) async {
+  static Future<bool> requestStoragePermission(BuildContext context) async {
     PermissionStatus status = await Permission.storage.request();
 
     if(!status.isGranted) { // 허용이 안된 경우

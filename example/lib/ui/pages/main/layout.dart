@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:screen_capture_event_example/ui/pages/main/setting_page.dart';
-import 'package:screen_capture_event_example/ui/pages/main/subscription_page.dart';
+import 'package:screen_capture_event_example/ui/pages/about/subscription_page.dart';
 import 'package:screen_capture_event_example/ui/pages/main/tag_list_page.dart';
 import 'package:screen_capture_event_example/widgets/appbar/custom_app_bar.dart';
 import 'dart:io';
@@ -27,22 +27,25 @@ class _LayoutState extends State<Layout> with WidgetsBindingObserver {
       unselectedColor: Colors.white,
       selectedColor: Colors.lightBlueAccent,
     ),
+    /*
     SalomonBottomBarItem(
       title: const Text('Subscription'),
       icon: const Icon(Icons.shopping_cart),
       unselectedColor: Colors.white,
       selectedColor: Colors.greenAccent,
     ),
+
+     */
     SalomonBottomBarItem(
-      title: const Text('Settings'),
-      icon: const Icon(Icons.settings),
+      title: const Text('About'),
+      icon: const Icon(Icons.info_outline),
       unselectedColor: Colors.white,
       selectedColor: Colors.blueGrey,
     ),
   ];
   final List<Widget> _widgetOptions = [
     const TagListPage(),
-    const SubscriptionPage(),
+    //const SubscriptionPage(),
     const SettingPage()
   ];
 

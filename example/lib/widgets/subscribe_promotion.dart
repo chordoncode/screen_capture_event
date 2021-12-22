@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:neon/neon.dart';
 import 'package:screen_capture_event_example/ui/pages/main/layout.dart';
+import 'package:screen_capture_event_example/ui/pages/about/subscription_page.dart';
 
 class SubscribePromotion extends StatelessWidget {
   final bool clickable;
@@ -29,7 +30,7 @@ class SubscribePromotion extends StatelessWidget {
                         onTap: () {
                           if (clickable) {
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => Layout(currentIndex: 1, fromOnBoardingPage: false)));
+                                MaterialPageRoute(builder: (context) => SubscriptionPage()));
                           }
                         },
                         child: Neon(

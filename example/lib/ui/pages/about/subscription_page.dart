@@ -3,12 +3,11 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:screen_capture_event_example/common/ad/banner_ad_widget.dart';
 import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
+import 'package:screen_capture_event_example/widgets/appbar/custom_app_bar.dart';
 import 'package:screen_capture_event_example/widgets/button/custom_buttons.dart';
 import 'package:screen_capture_event_example/widgets/center_indicator.dart';
 import 'package:screen_capture_event_example/widgets/subscribe_promotion.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'layout.dart';
 
 class SubscriptionPage extends StatefulWidget {
   const SubscriptionPage({Key? key}) : super(key: key);
@@ -36,8 +35,12 @@ class _SubscriptionPageState extends LifecycleWatcherState<SubscriptionPage> {
     _pending = PaymentService.instance.isPurchasePending();
 
     if (!_pending) {
-      return Column(
-        children: _buildWidget()/* add child content here */,
+      return Scaffold(
+          appBar: CustomAppBar(hasActions: false, fromOnBoardingPage: false, title: 'Subscription'),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: _buildWidget()
+          )
       );
     } else {
       return Stack(
@@ -65,8 +68,9 @@ class _SubscriptionPageState extends LifecycleWatcherState<SubscriptionPage> {
       widgets.add(const SizedBox(height: 20,));
     }
     widgets.add(
+      Center(child:
       Padding(
-        padding: const EdgeInsets.only(left: 32, right: 32, top: 10, bottom: 20),
+        padding: const EdgeInsets.only(top: 10, bottom: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -92,7 +96,7 @@ class _SubscriptionPageState extends LifecycleWatcherState<SubscriptionPage> {
             ),
           ]
         )
-      )
+      ))
     );
     return widgets;
   }
@@ -100,25 +104,5 @@ class _SubscriptionPageState extends LifecycleWatcherState<SubscriptionPage> {
   _buildPriceInfo() {
     final ProductDetails productDetails = PaymentService.instance.getProducts().first;
     return productDetails.price + " / 1month" ;
-  }
-}
-
-class SubscriptionBenefit extends StatelessWidget {
-  final Text text;
-
-  const SubscriptionBenefit({Key? key, required this.text}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        PaymentService.instance.isPro() ?
-          const Icon(Icons.check_box_outlined, color: Colors.blueGrey,) :
-          const Icon(Icons.check_box_outline_blank_outlined, color: Colors.blueGrey,),
-        const SizedBox(width: 5,),
-        text
-      ],
-    );
   }
 }

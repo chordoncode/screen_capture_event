@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:screen_capture_event_example/common/notification/app_notification.dart';
 import 'package:screen_capture_event_example/main.dart';
 
@@ -39,7 +40,7 @@ abstract class LifecycleWatcherState<T extends StatefulWidget> extends State<T>
 
     if (captured) {
       captured = false;
-      AppNotification().cancelAllNotifications();
+      //AppNotification().cancelAllNotifications();
     }
     setState(() {
     });

@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    PermissionRequest.requestCameraPermission(context);
+    PermissionRequest.requestStoragePermission(context);
 
     bool? doneOnBoarding = SharedStorage.read(SharedStorageKey.doneOnBoarding);
     doneOnBoarding = doneOnBoarding?? false;
@@ -91,11 +91,12 @@ class _MyAppState extends State<MyApp> {
     return ScreenUtilInit(
       designSize: const Size(392, 759),
       builder: () => MaterialApp(
+        title: "Grab Tags",
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.grey.shade900,
-          primarySwatch: Colors.grey,
+          primarySwatch: Colors.blueGrey,
         ),
-        home: doneOnBoarding! ? Layout(fromOnBoardingPage: false) : const OnBoardingPage(),
+        home: Layout(fromOnBoardingPage: false), //doneOnBoarding! ? Layout(fromOnBoardingPage: false) : const OnBoardingPage(),
         debugShowCheckedModeBanner: false,
       )
     );

@@ -1,16 +1,17 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_capture_event_example/common/ad/banner_ad_widget.dart';
 import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
-import 'package:screen_capture_event_example/ui/pages/setting/oss_license_page.dart';
+import 'package:screen_capture_event_example/ui/pages/about/oss_license_page.dart';
+import 'package:screen_capture_event_example/ui/pages/about/subscription_page.dart';
 import 'package:screen_capture_event_example/widgets/app_version_widget.dart';
-import 'package:screen_capture_event_example/widgets/footer.dart';
 import 'package:screen_capture_event_example/widgets/sub_menu_widget.dart';
 import 'package:screen_capture_event_example/widgets/subscribe_promotion.dart';
 
 class SubMenu {
   Icon icon;
-  String title;
+  Widget title;
   Widget widget;
 
   SubMenu({required this.icon, required this.title, required this.widget});
@@ -29,7 +30,26 @@ class _SettingPageState extends LifecycleWatcherState<SettingPage> {
     const double icon_size = 25;
 
     List<dynamic> _subMenus = [
-      SubMenuTile(SubMenu(icon: const Icon(Icons.mode_edit_outline_outlined, size: icon_size, color: Colors.white), title: "Open source license", widget: const OssLicensePage())),
+      SubMenuTile(SubMenu(
+        icon: const Icon(Icons.shopping_cart, size: icon_size, color: Colors.white),
+        title: Row(
+          children: [
+            Badge(
+              shape: BadgeShape.square,
+              badgeColor: Colors.pinkAccent,
+              borderRadius: BorderRadius.circular(8),
+              badgeContent: const Text(
+                  'PRO', style: TextStyle(fontSize: 8, color: Colors.white)),
+            ),
+            const SizedBox(width: 5,),
+            const Text("Subscription", style: TextStyle(fontSize: 14, color: Colors.white)),
+          ],
+        ),
+        widget: const SubscriptionPage())),
+      SubMenuTile(SubMenu(
+        icon: const Icon(Icons.mode_edit_outline_outlined, size: icon_size, color: Colors.white),
+        title: const Text("Open source license", style: TextStyle(fontSize: 14, color: Colors.white)),
+        widget: const OssLicensePage())),
       const AppVersionWidget(),
       //const FooterWidget()
     ];
@@ -70,9 +90,8 @@ class _SettingPageState extends LifecycleWatcherState<SettingPage> {
             }
           },
           separatorBuilder: (context, index) {
-            return Divider(
-                thickness: (subMenus[index] is SubMenuTile) ? 1 : 0,
-                color: const Color(0xffeeeeee)
+            return const Divider(
+                thickness: 0,
             );
           },
         )

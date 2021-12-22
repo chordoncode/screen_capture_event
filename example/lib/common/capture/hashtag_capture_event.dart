@@ -27,25 +27,24 @@ class HashTagCaptureEvent {
 
   void _addScreenShotListener() {
     _screenCaptureEvent.addScreenShotListener((filePath) async {
-      print(filePath);
       captured = true;
 
       HashTag? hashTag = await _findHashTagFromScreenShot(filePath);
 
       if (hashTag != null) {
-        AppNotification().showNotification(-1, 'Grab tags', 'Copy tags!');
+        AppNotification().showNotification(-1, 'Grab Tags', 'Copy tags!');
         /*
         _copyToClipboard(hashTag).then((value) =>
          AppNotification().showNotification(-1, 'Grab tags', 'Paste copied tags!')
         );
         */
       } else {
-        AppNotification().showNotification(-1, 'Grab tags', 'No tags. Please retry!');
+        AppNotification().showNotification(-1, 'Grab Tags', 'No tags. Please retry!');
       }
 
-      if (!PaymentService.instance.isPro()) {
-        Bringtoforeground.bringAppToForeground();
-      }
+      //if (!PaymentService.instance.isPro()) {
+      Bringtoforeground.bringAppToForeground();
+      //}
     });
   }
 
