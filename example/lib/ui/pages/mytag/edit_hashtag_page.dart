@@ -3,6 +3,7 @@ import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit_for_korean/google_ml_kit_for_korean.dart';
 import 'package:screen_capture_event_example/common/ad/banner_ad_widget.dart';
+import 'package:screen_capture_event_example/common/ad/interstitial_ad_widget.dart';
 import 'package:screen_capture_event_example/common/detector/hashtag_detector.dart';
 import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
@@ -42,6 +43,8 @@ class _EditHashTagPageState extends LifecycleWatcherState<EditHashTagPage> {
     if (!PaymentService.instance.isPro()) {
       widgets.add(const BannerAdWidget());
       widgets.add(const SizedBox(height: 10,));
+      widgets.add(const SizedBox(height: 10,));
+
     }
     widgets.add(
       FutureBuilder<HashTag>(

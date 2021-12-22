@@ -1,8 +1,11 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:move_to_background/move_to_background.dart';
+import 'package:screen_capture_event_example/common/ad/interstitial_ad_widget.dart';
 import 'package:screen_capture_event_example/common/capture/hashtag_capture_event.dart';
 import 'package:screen_capture_event_example/common/notification/app_notification.dart';
+import 'package:screen_capture_event_example/common/payment/payment_service.dart';
 import 'package:screen_capture_event_example/common/storage/shared_storage.dart';
 import 'package:screen_capture_event_example/common/storage/shared_storage_key.dart';
 import 'package:screen_capture_event_example/main.dart';
@@ -95,7 +98,30 @@ class _CustomAppBarState extends State<CustomAppBar> {
   void _activate() {
     AppNotification().showNotification(-1, 'Grab tags', 'Grab tags has been activated.');
     HashTagCaptureEvent().screenCaptureEvent.watch();
-    MoveToBackground.moveTaskToBack();
+
+    showPlatformDialog(
+      context: context,
+      builder: (context) => BasicDialogAlert(
+        title: const Text("Grab Tags", style: TextStyle(fontSize: 18, color: Colors.blueGrey)),
+        content: const Text("Capture a screenshot to grab tags!", style: TextStyle(fontSize: 15, color: Colors.blueGrey)),
+        actions: <Widget>[
+          BasicDialogAction(
+            title: const Text("Stay here"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          BasicDialogAction(
+            title: const Text("Move to grab tags"),
+            onPressed: () {
+              Navigator.pop(context);
+              MoveToBackground.moveTaskToBack();
+            },
+          ),
+        ],
+      ),
+    );
+    //MoveToBackground.moveTaskToBack();
   }
 
   void _deactivate() {

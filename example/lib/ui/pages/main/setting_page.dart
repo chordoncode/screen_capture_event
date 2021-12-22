@@ -6,6 +6,7 @@ import 'package:screen_capture_event_example/ui/pages/setting/oss_license_page.d
 import 'package:screen_capture_event_example/widgets/app_version_widget.dart';
 import 'package:screen_capture_event_example/widgets/footer.dart';
 import 'package:screen_capture_event_example/widgets/sub_menu_widget.dart';
+import 'package:screen_capture_event_example/widgets/subscribe_promotion.dart';
 
 class SubMenu {
   Icon icon;
@@ -30,7 +31,7 @@ class _SettingPageState extends LifecycleWatcherState<SettingPage> {
     List<dynamic> _subMenus = [
       SubMenuTile(SubMenu(icon: const Icon(Icons.mode_edit_outline_outlined, size: icon_size, color: Colors.white), title: "Open source license", widget: const OssLicensePage())),
       const AppVersionWidget(),
-      const FooterWidget()
+      //const FooterWidget()
     ];
 
     return Scaffold(
@@ -46,8 +47,10 @@ class _SettingPageState extends LifecycleWatcherState<SettingPage> {
 
     if (!PaymentService.instance.isPro()) {
       widgets.add(const BannerAdWidget());
+      widgets.add(const SizedBox(height: 20,));
+      widgets.add(const SubscribePromotion(clickable: true));
+      widgets.add(const SizedBox(height: 20,));
     }
-    widgets.add(const SizedBox(height: 10,));
     widgets.add(
       Expanded(
         child: ListView.separated(

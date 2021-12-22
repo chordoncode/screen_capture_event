@@ -1,23 +1,35 @@
 import 'dart:io';
 
-import 'package:screen_capture_event_example/common/payment/payment_service.dart';
-
 class FileUtils {
-  static Directory BASE_DIR = Directory('/storage/emulated/0/DCIM/Screenshots');
+  // LG
+  // /storage/emulated/0/Pictures/Screenshots/Screenshot_20211222-103340.png
+  // /storage/emulated/0/DCIM/Camera/Screenshot_20211222-103340.png
 
-  static FileSystemEntity getLastScreenShot() {
-    return BASE_DIR.listSync().last;
-  }
+  // SAMSUNG
+  // /storage/emulated/0/DCIM/Screenshots/.pending-1640741877-Screenshot_20211222-103757_Gallery.jpg
 
-  static bool isTargetForNonPro(final String path) {
-    if (!PaymentService.instance.isPro()) {
-      return path.toLowerCase().contains("instagram");
+  static String _lastScreenShotPath = "";
+
+  static Future<FileSystemEntity> getLastScreenShot(String path) async {
+
+    Directory baseDir = Directory(path.substring(0, path.lastIndexOf("/")));
+    FileSystemEntity fileSystemEntity = baseDir.listSync().last;
+
+    for (int i = 0; i < 3; i++) {
+      if (fileSystemEntity.path == _lastScreenShotPath) {
+        fileSystemEntity = await Future.delayed(const Duration(milliseconds: 100), () {
+          return baseDir.listSync().last;
+        });
+        break;
+      }
     }
-    return true;
+    _lastScreenShotPath = fileSystemEntity.path;
+    return fileSystemEntity;
   }
 
-  static String getCurrentApp() {
-    final String path = getLastScreenShot().path;
-    return path.substring(path.lastIndexOf("_") + 1, path.lastIndexOf("."));
+  static Future<String> getCurrentApp(String path) async {
+    FileSystemEntity fileSystemEntity = await getLastScreenShot(path);
+    final String filePath = fileSystemEntity.path;
+    return filePath.substring(filePath.lastIndexOf("_") + 1, filePath.lastIndexOf("."));
   }
 }

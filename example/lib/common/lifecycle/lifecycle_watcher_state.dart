@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:screen_capture_event_example/common/notification/app_notification.dart';
-import 'package:screen_capture_event_example/common/payment/payment_service.dart';
-import 'package:screen_capture_event_example/common/util/file_utils.dart';
 import 'package:screen_capture_event_example/main.dart';
-import 'package:screen_capture_event_example/ui/pages/ad/interstitial_ad_page.dart';
 
 abstract class LifecycleWatcherState<T extends StatefulWidget> extends State<T>
     with WidgetsBindingObserver {
@@ -42,15 +39,6 @@ abstract class LifecycleWatcherState<T extends StatefulWidget> extends State<T>
 
     if (captured) {
       captured = false;
-
-      /*
-      if (!PaymentService.instance.isPro()) {
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        await Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const InterstitialAdPage()));
-      }
-      */
-
       AppNotification().cancelAllNotifications();
     }
     setState(() {

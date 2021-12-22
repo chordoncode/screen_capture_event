@@ -35,6 +35,6 @@ class HashTagDetector {
 
   List<String> _extractedHashtagList(String hashtagText) {
     var allMatches = regexp.allMatches(hashtagText);
-    return allMatches.map((m) => m.group(0)!).toSet().toList();
+    return allMatches.map((m) => m.group(0)!.toLowerCase()).toSet().toList();
   }
 }

@@ -18,10 +18,6 @@ class _CopyButtonWidgetState extends State<CopyButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return PaymentService.instance.isPro() || widget.index == 0 ? _getButtonForPro() : _getButtonForNonPro();
-  }
-
-  Widget _getButtonForNonPro() {
     return SizedBox(
       height: 20,
       child: ElevatedButton(
@@ -29,60 +25,28 @@ class _CopyButtonWidgetState extends State<CopyButtonWidget> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
             ),
-            primary: Colors.grey, // background
+            primary: Colors.blueAccent, // background
           ),
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Layout(currentIndex: 1, fromOnBoardingPage: false)));
+            if (!PaymentService.instance.isPro()) {
+              final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
+              _interstitialAdWidget.init(context, false);
+            }
+
+            _copyToClipboard().then((value) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text('Copied successfully!', style: TextStyle(color: Colors.pinkAccent)),
+                      duration: Duration(seconds: 2)
+                  ));
+            });
           },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                'COPY',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10
-                )
-              ),
-              SizedBox(width: 2,),
-              Text('PRO', style: TextStyle(fontSize: 8, color: Colors.pinkAccent, fontWeight: FontWeight.bold)),
-            ],
+          child: const Text(
+              'COPY',
+              style: TextStyle(
+                color: Colors.white, fontSize: 10,
+              )
           )
-      )
-    );
-  }
-
-  Widget _getButtonForPro() {
-    return SizedBox(
-      height: 20,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          primary: Colors.blueAccent, // background
-        ),
-        onPressed: () {
-          if (!PaymentService.instance.isPro()) {
-            final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
-            _interstitialAdWidget.init(context);
-          }
-
-          _copyToClipboard().then((value) {
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    content: Text('Copied successfully!', style: TextStyle(color: Colors.pinkAccent)),
-                    duration: Duration(seconds: 2)
-                ));
-          });
-        },
-        child: const Text(
-            'COPY',
-            style: TextStyle(
-              color: Colors.white, fontSize: 10,
-            )
-        )
       )
     );
   }

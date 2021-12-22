@@ -22,8 +22,6 @@ class _TagAreaWidgetState extends State<TagAreaWidget> with Observer {
   void initState() {
     super.initState();
     Observable.instance.addObserver(this);
-
-    _tags = widget.hashTag.tags.split(" ");
   }
 
   @override
@@ -34,6 +32,8 @@ class _TagAreaWidgetState extends State<TagAreaWidget> with Observer {
 
   @override
   Widget build(BuildContext context) {
+    _tags = widget.hashTag.tags.split(" ");
+
     return Tags(
       alignment: WrapAlignment.start,
       itemCount: _tags.length, // required

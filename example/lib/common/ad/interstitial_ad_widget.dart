@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:move_to_background/move_to_background.dart';
-import 'package:screen_capture_event_example/ui/pages/main/layout.dart';
 
 class InterstitialAdWidget {
   static final Map<String, String> UNIT_ID = kReleaseMode
@@ -17,13 +15,31 @@ class InterstitialAdWidget {
     'android': 'ca-app-pub-3940256099942544/1033173712',
   };
   static const int maxFailedLoadAttempts = 3;
+  static int callCount = 0;
 
   InterstitialAd? _interstitialAd;
   int _numInterstitialLoadAttempts = 0;
+  bool _openAd = false;
 
 
-  Future<void> init(BuildContext context) {
-    return _createInterstitialAd(context);
+  Future<void> init(BuildContext context, bool applyCallCount) {
+    if (applyCallCount) {
+      callCount++;
+
+      if (callCount % 2 == 0) {
+        callCount = 0;
+        _openAd = true;
+      } else {
+        _openAd = false;
+      }
+    } else {
+      _openAd = true;
+    }
+
+    if (_openAd) {
+      return _createInterstitialAd(context);
+    }
+    return Future.value(null);
   }
 
   bool isLoaded() {

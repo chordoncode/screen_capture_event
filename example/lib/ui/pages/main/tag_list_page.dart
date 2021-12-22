@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:icon_animator/icon_animator.dart';
 import 'package:neon/neon.dart';
 import 'package:screen_capture_event_example/common/ad/banner_ad_widget.dart';
+import 'package:screen_capture_event_example/common/ad/interstitial_ad_widget.dart';
 import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
 import 'package:screen_capture_event_example/common/util/time_utils.dart';
@@ -14,6 +15,7 @@ import 'package:screen_capture_event_example/ui/pages/main/layout.dart';
 import 'package:screen_capture_event_example/widgets/center_indicator.dart';
 import 'package:screen_capture_event_example/widgets/dismissible_background.dart';
 import 'package:screen_capture_event_example/widgets/list_expandable_widget.dart';
+import 'package:screen_capture_event_example/widgets/subscribe_promotion.dart';
 
 class TagListPage extends StatefulWidget {
   const TagListPage({Key? key}) : super(key: key);
@@ -23,7 +25,7 @@ class TagListPage extends StatefulWidget {
 }
 class _TagListPageState extends LifecycleWatcherState<TagListPage> {
   int? _updatedFavoriteHashTagId;
-  final Set<int> _expandIndex = {0};
+  final Set<int> _expandId = {};
   int _listSize = 0;
 
   @override
@@ -62,7 +64,7 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
     if (!PaymentService.instance.isPro()) {
       widgets.add(const BannerAdWidget());
       widgets.add(const SizedBox(height: 20,));
-      widgets.add(getWidgetForOtherApps());
+      widgets.add(const SubscribePromotion(clickable: true));
       widgets.add(const SizedBox(height: 20,));
     }
     widgets.add(
@@ -85,56 +87,6 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
     return widgets;
   }
 
-  Padding getWidgetForOtherApps() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Badge(
-                  shape: BadgeShape.square,
-                  badgeColor: Colors.pinkAccent,
-                  borderRadius: BorderRadius.circular(8),
-                  badgeContent: const Text(
-                      'PRO', style: TextStyle(fontSize: 10, color: Colors.white)),
-                ),
-                const SizedBox(width: 5,),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Layout(currentIndex: 1, fromOnBoardingPage: false)));
-                    },
-                    child: Neon(
-                      text: "Subscribe",
-                      color: Colors.green,
-                      fontSize: 15,
-                      font: NeonFont.Membra,
-                      flickeringText: true,
-                    )
-                )
-              ]
-          ),
-          const SizedBox(height: 5,),
-          const Text(
-            "✓ to remove all Ads",
-            style: TextStyle(fontSize: 12, color: Colors.pinkAccent)
-          ),
-          const Text(
-            "✓ to grab tags from other apps besides Instagram",
-            style: TextStyle(fontSize: 12, color: Colors.pinkAccent)
-          ),
-          const Text(
-              "✓ to copy & manage tags without limitations",
-              style: TextStyle(fontSize: 12, color: Colors.pinkAccent)
-          ),
-        ]
-    )
-    );
-  }
-
   Widget _getBody(List<HashTag> data) {
     return RefreshIndicator(
       onRefresh: () =>
@@ -155,7 +107,7 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
     if (!PaymentService.instance.isPro()) {
       widgets.add(const BannerAdWidget());
       widgets.add(const SizedBox(height: 20,));
-      widgets.add(getWidgetForOtherApps());
+      widgets.add(const SubscribePromotion(clickable: true));
       widgets.add(const SizedBox(height: 20,));
     }
     widgets.add(
@@ -176,7 +128,7 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
                 },
                 background: const DismissBackground(message: "Good bye~ "),
                 child: ListExpandableWidget(
-                  isExpanded: _expandIndex.contains(index) ? true : false,
+                  isExpanded: isExpanded(data[index].id, index),
                   collapsedIcon: const Icon(
                     Icons.keyboard_arrow_right,
                     color: Colors.white, size: 14),
@@ -186,10 +138,10 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
                   header: _header(data[index]),
                   items: _buildItems(context, data[index], index),
                   onExpanded: () {
-                    _expandIndex.add(index);
+                    _expandId.add(data[index].id);
                   },
                   onCollapsed: () {
-                    _expandIndex.remove(index);
+                    _expandId.remove(data[index].id);
                   },
                 )
             );
@@ -279,19 +231,17 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
 
   Future<List<HashTag>> _getHashTagList() async {
     List<HashTagEntity> hashTagEntities = await HashTagRepository.getHashTags();
-
-    if (_listSize != hashTagEntities.length) {
-      _expandIndex.clear();
-      _expandIndex.add(0);
-    }
-    _listSize = hashTagEntities.length;
-
     return hashTagEntities.map((e) => HashTag.buildFrom(e)).toList();
 
   }
 
   Future<bool> _deleteItem(int hashtagId) async {
+    _expandId.remove(hashtagId);
     int affected = await HashTagRepository.delete(hashtagId);
     return affected > 0;
+  }
+
+  bool isExpanded(int id, int index) {
+    return _expandId.contains(id) || index == 0;
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_observer/Observable.dart';
 import 'package:flutter_observer/Observer.dart';
+import 'package:screen_capture_event_example/common/ad/interstitial_ad_widget.dart';
+import 'package:screen_capture_event_example/common/payment/payment_service.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
 import 'package:screen_capture_event_example/repositories/hashtag_repository.dart';
 
@@ -44,6 +46,11 @@ class _SaveButtonWidgetState extends State<SaveButtonWidget> with Observer {
             ),
             onPressed: () {
               if (_enabled) {
+                if (!PaymentService.instance.isPro()) {
+                  final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
+                  _interstitialAdWidget.init(context, false);
+                }
+
                 _enabled  = false;
                 _update();
 

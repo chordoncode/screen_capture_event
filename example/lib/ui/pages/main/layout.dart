@@ -54,11 +54,12 @@ class _LayoutState extends State<Layout> with WidgetsBindingObserver {
       });
       return false;
     }
+
     showPlatformDialog(
       context: context,
       builder: (context) => BasicDialogAlert(
-        title: const Text("Do you want to exit?"),
-        content: const Text("Please re-activate next time. See you later!"),
+        title: const Text("Do you want to exit?", style: TextStyle(fontSize: 18, color: Colors.blueGrey)),
+        content: const Text("Please re-activate next time. See you later!", style: TextStyle(fontSize: 15, color: Colors.blueGrey)),
         actions: <Widget>[
           BasicDialogAction(
             title: const Text("Cancel"),
@@ -98,7 +99,7 @@ class _LayoutState extends State<Layout> with WidgetsBindingObserver {
         appBar: CustomAppBar(hasActions: true, fromOnBoardingPage: widget.fromOnBoardingPage),
         body: _widgetOptions[_currentIndex],
         bottomNavigationBar: SalomonBottomBar(
-          margin: const EdgeInsets.only(left:50.0, right: 50.0, top:8.0, bottom:8.0),
+          margin: const EdgeInsets.only(left:10.0, right: 10.0, top:8.0, bottom:8.0),
           currentIndex: _currentIndex,
           onTap: (int index) {
             setState(() {

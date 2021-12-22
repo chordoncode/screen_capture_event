@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_capture_event_example/common/ad/interstitial_ad_widget.dart';
 import 'package:screen_capture_event_example/common/payment/payment_service.dart';
 import 'package:screen_capture_event_example/model/hashtag.dart';
 import 'package:screen_capture_event_example/ui/pages/mytag/edit_hashtag_page.dart';
@@ -19,67 +20,37 @@ class _EditButtonWidgetState extends State<EditButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return PaymentService.instance.isPro() || widget.index == 0 ? _getButtonForPro() : _getButtonForNonPro();
-  }
-
-  Widget _getButtonForNonPro() {
     return SizedBox(
-      height: 20,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          primary: Colors.grey, // background
-        ),
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => Layout(currentIndex: 1, fromOnBoardingPage: false)));
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
-              'EDIT',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 10
-              )
+        height: 20,
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              primary: Colors.white, // background
             ),
-            SizedBox(width: 2,),
-            Text('PRO', style: TextStyle(fontSize: 8, color: Colors.pinkAccent, fontWeight: FontWeight.bold)),
-          ],
-        )
-      )
-    );
-  }
+            onPressed: () async {
 
-  Widget _getButtonForPro() {
-    return SizedBox(
-      height: 20,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          primary: Colors.white, // background
-        ),
-        onPressed: () async {
-          await Navigator.push(context,
-              MaterialPageRoute(builder: (context) => EditHashTagPage(hashTagId: widget.hashTag.id)));
+              if (!PaymentService.instance.isPro()) {
+                final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
+                _interstitialAdWidget.init(context, true);
+              }
 
-          setState(() {
-            widget.callback();
-          });
-        },
-        child: const Text(
-          'EDIT',
-          style: TextStyle(
-            color: Colors.blueAccent,
-            fontSize: 10
-          )
+              await Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EditHashTagPage(hashTagId: widget.hashTag.id)));
+
+              setState(() {
+                widget.callback();
+              });
+            },
+            child: const Text(
+                'EDIT',
+                style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 10
+                )
+            )
         )
-      )
     );
   }
 }
