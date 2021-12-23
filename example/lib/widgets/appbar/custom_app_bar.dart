@@ -2,13 +2,13 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:move_to_background/move_to_background.dart';
-import 'package:screen_capture_event_example/common/ad/interstitial_ad_widget.dart';
-import 'package:screen_capture_event_example/common/capture/hashtag_capture_event.dart';
-import 'package:screen_capture_event_example/common/notification/app_notification.dart';
-import 'package:screen_capture_event_example/common/payment/payment_service.dart';
-import 'package:screen_capture_event_example/common/storage/shared_storage.dart';
-import 'package:screen_capture_event_example/common/storage/shared_storage_key.dart';
-import 'package:screen_capture_event_example/main.dart';
+import 'package:grab_tags/common/ad/interstitial_ad_widget.dart';
+import 'package:grab_tags/common/capture/hashtag_capture_event.dart';
+import 'package:grab_tags/common/notification/app_notification.dart';
+import 'package:grab_tags/common/payment/payment_service.dart';
+import 'package:grab_tags/common/storage/shared_storage.dart';
+import 'package:grab_tags/common/storage/shared_storage_key.dart';
+import 'package:grab_tags/main.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool hasActions;
@@ -38,7 +38,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Image.asset('assets/images/app_icon.png', width: 25),
-            const SizedBox(width: 3,),
+            const SizedBox(width: 5,),
             Text(
               widget.title != null ? widget.title! : 'Grab Tags',
               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
@@ -132,8 +132,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
   }
 
   void _deactivate() {
-    AppNotification().showNotification(-1, 'Grab Tags', 'Grab Tags has been deactivated.');
+    //AppNotification().showNotification(-1, 'Grab Tags', 'Grab Tags has been deactivated.');
     HashTagCaptureEvent().screenCaptureEvent.dispose();
+
+    if (!PaymentService.instance.isPro()) {
+      final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
+      _interstitialAdWidget.init(context, false);
+    }
   }
 
   _executeAfterWholeBuildProcess(BuildContext context) {

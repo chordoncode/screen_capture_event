@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_observer/Observable.dart';
 import 'package:flutter_observer/Observer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:screen_capture_event_example/model/hashtag.dart';
-import 'package:screen_capture_event_example/ui/components/widget/copy_button_widget.dart';
-import 'package:screen_capture_event_example/ui/components/widget/new_hashtag_input_widget.dart';
-import 'package:screen_capture_event_example/ui/components/widget/save_button_widget.dart';
-import 'package:screen_capture_event_example/ui/components/widget/tag_area_widget.dart';
-import 'package:screen_capture_event_example/ui/components/widget/tag_date_widget.dart';
-import 'package:screen_capture_event_example/ui/components/widget/title_input_widget.dart';
+import 'package:grab_tags/model/hashtag.dart';
+import 'package:grab_tags/ui/components/widget/copy_button_widget.dart';
+import 'package:grab_tags/ui/components/widget/new_hashtag_input_widget.dart';
+import 'package:grab_tags/ui/components/widget/save_button_widget.dart';
+import 'package:grab_tags/ui/components/widget/tag_area_widget.dart';
+import 'package:grab_tags/ui/components/widget/tag_date_widget.dart';
+import 'package:grab_tags/ui/components/widget/title_input_widget.dart';
 
 class HashTagComponent extends StatefulWidget {
   final HashTag hashTag;

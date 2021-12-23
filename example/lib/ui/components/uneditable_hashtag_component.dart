@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_observer/Observable.dart';
 import 'package:flutter_observer/Observer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:screen_capture_event_example/model/hashtag.dart';
-import 'package:screen_capture_event_example/ui/components/widget/copy_button_widget.dart';
-import 'package:screen_capture_event_example/ui/components/widget/edit_button_widget.dart';
-import 'package:screen_capture_event_example/ui/components/widget/tag_area_widget.dart';
+import 'package:grab_tags/model/hashtag.dart';
+import 'package:grab_tags/ui/components/widget/copy_button_widget.dart';
+import 'package:grab_tags/ui/components/widget/edit_button_widget.dart';
+import 'package:grab_tags/ui/components/widget/tag_area_widget.dart';
 
 class UneditableHashTagComponent extends StatefulWidget {
   final HashTag hashTag;

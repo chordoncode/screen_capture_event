@@ -3,13 +3,12 @@ import 'dart:io';
 import 'package:bringtoforeground/bringtoforeground.dart';
 import 'package:flutter/services.dart';
 import 'package:screen_capture_event/screen_capture_event.dart';
-import 'package:screen_capture_event_example/common/detector/hashtag_detector.dart';
-import 'package:screen_capture_event_example/common/notification/app_notification.dart';
-import 'package:screen_capture_event_example/common/payment/payment_service.dart';
-import 'package:screen_capture_event_example/common/util/file_utils.dart';
-import 'package:screen_capture_event_example/main.dart';
-import 'package:screen_capture_event_example/model/hashtag.dart';
-import 'package:screen_capture_event_example/repositories/hashtag_repository.dart';
+import 'package:grab_tags/common/detector/hashtag_detector.dart';
+import 'package:grab_tags/common/notification/app_notification.dart';
+import 'package:grab_tags/common/util/file_utils.dart';
+import 'package:grab_tags/main.dart';
+import 'package:grab_tags/model/hashtag.dart';
+import 'package:grab_tags/repositories/hashtag_repository.dart';
 
 class HashTagCaptureEvent {
   static final HashTagCaptureEvent _instance = HashTagCaptureEvent._internal();
@@ -63,7 +62,7 @@ class HashTagCaptureEvent {
     // save widget.hashTag to local DB.
     return HashTagRepository.save({
       'tags': tags.join(" "),
-      'title': 'copied from ' +  await FileUtils.getCurrentApp(path)
+      'title': 'grabbed from ' +  await FileUtils.getCurrentApp(path)
     });
   }
 

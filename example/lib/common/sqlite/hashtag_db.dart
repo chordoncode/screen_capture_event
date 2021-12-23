@@ -1,7 +1,7 @@
 import 'package:path/path.dart';
-import 'package:screen_capture_event_example/common/sqlite/hashtag_table.dart';
-import 'package:screen_capture_event_example/common/util/time_utils.dart';
-import 'package:screen_capture_event_example/repositories/hashtag_repository.dart';
+import 'package:grab_tags/common/sqlite/hashtag_table.dart';
+import 'package:grab_tags/common/util/time_utils.dart';
+import 'package:grab_tags/repositories/hashtag_repository.dart';
 import 'package:sqflite/sqflite.dart';
 
 /**

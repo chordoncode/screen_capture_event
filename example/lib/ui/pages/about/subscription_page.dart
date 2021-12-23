@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:screen_capture_event_example/common/ad/banner_ad_widget.dart';
-import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
-import 'package:screen_capture_event_example/common/payment/payment_service.dart';
-import 'package:screen_capture_event_example/widgets/appbar/custom_app_bar.dart';
-import 'package:screen_capture_event_example/widgets/button/custom_buttons.dart';
-import 'package:screen_capture_event_example/widgets/center_indicator.dart';
-import 'package:screen_capture_event_example/widgets/subscribe_promotion.dart';
+import 'package:grab_tags/common/ad/banner_ad_widget.dart';
+import 'package:grab_tags/common/lifecycle/lifecycle_watcher_state.dart';
+import 'package:grab_tags/common/payment/payment_service.dart';
+import 'package:grab_tags/widgets/appbar/custom_app_bar.dart';
+import 'package:grab_tags/widgets/button/custom_buttons.dart';
+import 'package:grab_tags/widgets/center_indicator.dart';
+import 'package:grab_tags/widgets/subscribe_promotion.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SubscriptionPage extends StatefulWidget {
@@ -74,26 +74,39 @@ class _SubscriptionPageState extends LifecycleWatcherState<SubscriptionPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            PaymentService.instance.getProducts().isNotEmpty ?
+              SimpleElevatedButtonWithIcon(
+                label: Column(children: [
+                  Text(
+                    PaymentService.instance.isPro() ? "Already subscribed" : "Subscribe",
+                    style: const TextStyle(fontSize: 20, color: Colors.white),),
+                  const SizedBox(height: 5,),
+                  Text(
+                    PaymentService.instance.isPro() ? "Manage my subscription" : _buildPriceInfo(),
+                    style: const TextStyle(fontSize: 15, color: Colors.white),)
+                ]),
+                iconData: PaymentService.instance.isPro() ? Icons.check : Icons.monetization_on_outlined,
+                color: PaymentService.instance.isPro() ? Colors.blueAccent : Colors.greenAccent,
+                onPressed: () {
+                  if (PaymentService.instance.isPro()) {
+                    launch('https://play.google.com/store/account/subscriptions');
+                  } else {
+                    PaymentService.instance.buyProduct(PaymentService.instance.getProducts().first);
+                  }
+                },
+              ) :
             SimpleElevatedButtonWithIcon(
-              label: Column(children: [
+              label: Column(children: const [
                 Text(
-                  PaymentService.instance.isPro() ? "Already subscribed" : "Subscribe",
-                  style: const TextStyle(fontSize: 20, color: Colors.white),),
-                const SizedBox(height: 5,),
-                Text(
-                  PaymentService.instance.isPro() ? "Manage my subscription" : _buildPriceInfo(),
-                  style: const TextStyle(fontSize: 15, color: Colors.white),)
+                  "Not Available Now",
+                  style: TextStyle(fontSize: 20, color: Colors.white),),
               ]),
               iconData: PaymentService.instance.isPro() ? Icons.check : Icons.monetization_on_outlined,
-              color: PaymentService.instance.isPro() ? Colors.blueAccent : Colors.greenAccent,
+              color: Colors.grey,
               onPressed: () {
-                if (PaymentService.instance.isPro()) {
-                  launch('https://play.google.com/store/account/subscriptions');
-                } else {
-                  PaymentService.instance.buyProduct(PaymentService.instance.getProducts().first);
-                }
               },
-            ),
+            )
+
           ]
         )
       ))

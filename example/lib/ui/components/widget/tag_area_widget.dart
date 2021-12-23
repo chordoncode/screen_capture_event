@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_observer/Observable.dart';
 import 'package:flutter_observer/Observer.dart';
 import 'package:flutter_tags/flutter_tags.dart';
-import 'package:screen_capture_event_example/model/hashtag.dart';
-import 'package:screen_capture_event_example/ui/components/widget/hashtag_update_dialog_widget.dart';
+import 'package:grab_tags/model/hashtag.dart';
+import 'package:grab_tags/ui/components/widget/hashtag_update_dialog_widget.dart';
 
 class TagAreaWidget extends StatefulWidget {
   final HashTag hashTag;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_observer/Observable.dart';
-import 'package:screen_capture_event_example/model/hashtag.dart';
+import 'package:grab_tags/model/hashtag.dart';
 
 class TitleInputWidget extends StatefulWidget {
   final HashTag hashTag;

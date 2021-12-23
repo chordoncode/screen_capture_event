@@ -1,4 +1,4 @@
-package id.nizwar.screen_capture_event_example;
+package io.grab_tags;
 
 import io.flutter.embedding.android.FlutterActivity;
 

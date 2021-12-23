@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:screen_capture_event_example/common/ad/interstitial_ad_widget.dart';
-import 'package:screen_capture_event_example/common/payment/payment_service.dart';
-import 'package:screen_capture_event_example/model/hashtag.dart';
-import 'package:screen_capture_event_example/ui/pages/main/layout.dart';
+import 'package:grab_tags/common/ad/interstitial_ad_widget.dart';
+import 'package:grab_tags/common/payment/payment_service.dart';
+import 'package:grab_tags/model/hashtag.dart';
+import 'package:grab_tags/ui/pages/main/layout.dart';
 
 class CopyButtonWidget extends StatefulWidget {
   final HashTag hashTag;

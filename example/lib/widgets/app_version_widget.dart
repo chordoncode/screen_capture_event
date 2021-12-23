@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:screen_capture_event_example/common/appversion/app_version.dart';
+import 'package:grab_tags/common/appversion/app_version.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppVersionWidget extends StatelessWidget {
@@ -46,9 +46,7 @@ class AppVersionWidget extends StatelessWidget {
   void _moveToDownloadPage(context) async {
     String? url; // FIX: update link
     if (Platform.isAndroid) {
-      url = "https://play.google.com/store/apps/details?id=com.coupang.mobile";
-    } else if (Platform.isIOS) {
-      url = "http://apps.apple.com/KR/app/com.coupang.mobile/id11111";
+      url = "https://play.google.com/store/apps/details?id=io.grab_tags";
     }
 
     if (await canLaunch(url!)) {

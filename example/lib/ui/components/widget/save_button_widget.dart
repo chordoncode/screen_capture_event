@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_observer/Observable.dart';
 import 'package:flutter_observer/Observer.dart';
-import 'package:screen_capture_event_example/common/ad/interstitial_ad_widget.dart';
-import 'package:screen_capture_event_example/common/payment/payment_service.dart';
-import 'package:screen_capture_event_example/model/hashtag.dart';
-import 'package:screen_capture_event_example/repositories/hashtag_repository.dart';
+import 'package:grab_tags/common/ad/interstitial_ad_widget.dart';
+import 'package:grab_tags/common/payment/payment_service.dart';
+import 'package:grab_tags/model/hashtag.dart';
+import 'package:grab_tags/repositories/hashtag_repository.dart';
 
 class SaveButtonWidget extends StatefulWidget {
   final HashTag hashTag;

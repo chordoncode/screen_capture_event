@@ -6,6 +6,8 @@
 /// Copyright (C) 2020 Liem Vo.
 ///
 import 'package:flutter/material.dart';
+import 'package:grab_tags/common/ad/interstitial_ad_widget.dart';
+import 'package:grab_tags/common/payment/payment_service.dart';
 
 class ListExpandableWidget extends StatefulWidget {
   // optional property and default value is false
@@ -46,17 +48,17 @@ class _ListExpandableWidgetState extends State<ListExpandableWidget> {
     _updateExpandState(widget.isExpanded);
   }
 
-  void _updateExpandState(bool isExpanded) =>
-      setState(() {
-        _isExpanded = isExpanded;
+  void _updateExpandState(bool isExpanded) {
+    setState(() {
+      _isExpanded = isExpanded;
 
-        if (isExpanded) {
-          widget.onExpanded!();
-        } else {
-          widget.onCollapsed!();
-        }
+      if (isExpanded) {
+        widget.onExpanded!();
+      } else {
+        widget.onCollapsed!();
       }
-    );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +75,15 @@ class _ListExpandableWidgetState extends State<ListExpandableWidget> {
       trailing: _isExpanded
           ? widget.expandedIcon ?? Icon(Icons.keyboard_arrow_down)
           : widget.collapsedIcon ?? Icon(Icons.keyboard_arrow_right),
-      onTap: () => _updateExpandState(!_isExpanded),
+      onTap: () {
+
+        if (!_isExpanded && !PaymentService.instance.isPro()) {
+          final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
+          _interstitialAdWidget.init(context, true);
+        }
+
+        _updateExpandState(!_isExpanded);
+      },
     ));
     return Ink(
       child: Column(

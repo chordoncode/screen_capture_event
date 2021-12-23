@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="id.nizwar.screen_capture_event_example">
+    package="io.grab_tags">
     <!-- Flutter needs it to communicate with the running application
          to allow about breakpoints, to provide hot reload, etc.
     -->

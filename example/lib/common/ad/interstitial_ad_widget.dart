@@ -8,7 +8,7 @@ class InterstitialAdWidget {
   static final Map<String, String> UNIT_ID = kReleaseMode
       ? {
     //'ios': '[YOUR iOS AD UNIT ID]',
-    'android': 'ca-app-pub-9201118486372073/4083964131',
+    'android': 'ca-app-pub-7909363627067674/3043614120',
   }
       : {
     'ios': 'ca-app-pub-3940256099942544/4411468910',

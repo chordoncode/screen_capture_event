@@ -1,13 +1,13 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:screen_capture_event_example/common/ad/banner_ad_widget.dart';
-import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
-import 'package:screen_capture_event_example/common/payment/payment_service.dart';
-import 'package:screen_capture_event_example/ui/pages/about/oss_license_page.dart';
-import 'package:screen_capture_event_example/ui/pages/about/subscription_page.dart';
-import 'package:screen_capture_event_example/widgets/app_version_widget.dart';
-import 'package:screen_capture_event_example/widgets/sub_menu_widget.dart';
-import 'package:screen_capture_event_example/widgets/subscribe_promotion.dart';
+import 'package:grab_tags/common/ad/banner_ad_widget.dart';
+import 'package:grab_tags/common/lifecycle/lifecycle_watcher_state.dart';
+import 'package:grab_tags/common/payment/payment_service.dart';
+import 'package:grab_tags/ui/pages/about/oss_license_page.dart';
+import 'package:grab_tags/ui/pages/about/subscription_page.dart';
+import 'package:grab_tags/widgets/app_version_widget.dart';
+import 'package:grab_tags/widgets/sub_menu_widget.dart';
+import 'package:grab_tags/widgets/subscribe_promotion.dart';
 
 class SubMenu {
   Icon icon;

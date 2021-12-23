@@ -27,7 +27,7 @@ class _HashTagUpdateDialogWidgetState extends State<HashTagUpdateDialogWidget> {
     return AlertDialog(
       backgroundColor: Colors.blueGrey,
       title: const Text(
-        "Please enter a new value",
+        "Please enter a new tag",
         style: TextStyle(fontSize: 15, color: Colors.white)),
       content: Padding(
         child: TextField(
@@ -44,7 +44,7 @@ class _HashTagUpdateDialogWidgetState extends State<HashTagUpdateDialogWidget> {
             labelStyle: TextStyle(color: Colors.white),
             counterStyle: TextStyle(color: Colors.white, fontSize: 8),
             errorStyle: TextStyle(color: Colors.red, fontSize: 8),
-            labelText: 'Update a new hash tag'
+            labelText: 'Enter a new tag'
           ),
         ),
         padding: const EdgeInsets.all(10.0),

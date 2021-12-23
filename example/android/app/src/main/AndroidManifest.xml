@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="id.nizwar.screen_capture_event_example">
+    package="io.grab_tags">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -47,6 +47,6 @@
 
        <meta-data
            android:name="com.google.android.gms.ads.APPLICATION_ID"
-           android:value="ca-app-pub-9201118486372073~9317793725"/>
+           android:value="ca-app-pub-7909363627067674~2496819215"/>
     </application>
 </manifest>

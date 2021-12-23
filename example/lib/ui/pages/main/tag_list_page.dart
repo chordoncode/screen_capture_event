@@ -1,21 +1,18 @@
-import 'package:badges/badges.dart';
 import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:icon_animator/icon_animator.dart';
-import 'package:neon/neon.dart';
-import 'package:screen_capture_event_example/common/ad/banner_ad_widget.dart';
-import 'package:screen_capture_event_example/common/ad/interstitial_ad_widget.dart';
-import 'package:screen_capture_event_example/common/lifecycle/lifecycle_watcher_state.dart';
-import 'package:screen_capture_event_example/common/payment/payment_service.dart';
-import 'package:screen_capture_event_example/common/util/time_utils.dart';
-import 'package:screen_capture_event_example/model/hashtag.dart';
-import 'package:screen_capture_event_example/repositories/hashtag_repository.dart';
-import 'package:screen_capture_event_example/ui/components/uneditable_hashtag_component.dart';
-import 'package:screen_capture_event_example/ui/pages/main/layout.dart';
-import 'package:screen_capture_event_example/widgets/center_indicator.dart';
-import 'package:screen_capture_event_example/widgets/dismissible_background.dart';
-import 'package:screen_capture_event_example/widgets/list_expandable_widget.dart';
-import 'package:screen_capture_event_example/widgets/subscribe_promotion.dart';
+import 'package:grab_tags/common/ad/banner_ad_widget.dart';
+import 'package:grab_tags/common/ad/interstitial_ad_widget.dart';
+import 'package:grab_tags/common/lifecycle/lifecycle_watcher_state.dart';
+import 'package:grab_tags/common/payment/payment_service.dart';
+import 'package:grab_tags/common/util/time_utils.dart';
+import 'package:grab_tags/model/hashtag.dart';
+import 'package:grab_tags/repositories/hashtag_repository.dart';
+import 'package:grab_tags/ui/components/uneditable_hashtag_component.dart';
+import 'package:grab_tags/widgets/center_indicator.dart';
+import 'package:grab_tags/widgets/dismissible_background.dart';
+import 'package:grab_tags/widgets/list_expandable_widget.dart';
+import 'package:grab_tags/widgets/subscribe_promotion.dart';
 
 class TagListPage extends StatefulWidget {
   const TagListPage({Key? key}) : super(key: key);
@@ -26,7 +23,6 @@ class TagListPage extends StatefulWidget {
 class _TagListPageState extends LifecycleWatcherState<TagListPage> {
   int? _updatedFavoriteHashTagId;
   final Set<int> _expandId = {};
-  int _listSize = 0;
 
   @override
   void initState() {
@@ -167,6 +163,11 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
         GestureDetector(
           onTap: () async {
             _updatedFavoriteHashTagId = hashTag.id;
+
+            if (!hashTag.favorite && !PaymentService.instance.isPro()) {
+              final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
+              _interstitialAdWidget.init(context, true);
+            }
 
             await HashTagRepository.update({
               'favorite': hashTag.favorite ? 0 : 1
