@@ -102,22 +102,32 @@ class _TagAreaWidgetState extends State<TagAreaWidget> with Observer {
         _tags.add(newHashTagString);
       }
 
-      setState(() {
+      //setState(() {
         final HashTag newHashTag = HashTag.buildFromExisting(widget.hashTag, _tags);
         Observable.instance.notifyObservers(["_SaveButtonWidgetState"], notifyName : "added", map: {"hashTag": newHashTag});
         Observable.instance.notifyObservers(["_HashTagComponentState"], notifyName : "added", map: {"hashTag": newHashTag});
-      });
+      //});
       return;
     }
     if (notifyName == 'updated') {
       String updatedHashTagString = map!['updatedHashTag'];
-      _tags[map!['index']] = updatedHashTagString;
+      if (_tags.contains(updatedHashTagString)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text('Found duplications', style: TextStyle(color: Colors.pinkAccent)),
+                duration: Duration(seconds: 2)
+            )
+        );
 
-      setState(() {
+      } else {
+        _tags[map!['index']] = updatedHashTagString;
+      }
+
+      //setState(() {
         final HashTag newHashTag = HashTag.buildFromExisting(widget.hashTag, _tags);
         Observable.instance.notifyObservers(["_SaveButtonWidgetState"], notifyName : "updated", map: {"hashTag": newHashTag});
         Observable.instance.notifyObservers(["_HashTagComponentState"], notifyName : "updated", map: {"hashTag": newHashTag});
-      });
+      //});
       return;
     }
   }
