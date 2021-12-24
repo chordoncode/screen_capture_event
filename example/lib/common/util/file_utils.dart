@@ -15,9 +15,11 @@ class FileUtils {
     Directory baseDir = Directory(path.substring(0, path.lastIndexOf("/")));
     FileSystemEntity fileSystemEntity = baseDir.listSync().last;
 
+    int duration = 100;
     for (int i = 0; i < 3; i++) {
       if (fileSystemEntity.path == _lastScreenShotPath) {
-        fileSystemEntity = await Future.delayed(const Duration(milliseconds: 100), () {
+        duration = duration * (i + 1);
+        fileSystemEntity = await Future.delayed(Duration(milliseconds: duration), () {
           return baseDir.listSync().last;
         });
         break;

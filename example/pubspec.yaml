@@ -1,6 +1,6 @@
 name: grab_tags
 description: Demonstrates how to use the screen_capture_event plugin.
-version: 1.0.0+2
+version: 1.0.0+4
 publish_to: 'none'
 
 environment:

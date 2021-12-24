@@ -93,10 +93,10 @@ class _HashTagUpdateDialogWidgetState extends State<HashTagUpdateDialogWidget> {
   }
 
   void _onChanged(String text) {
-    final RegExp regexp = RegExp(r"([a-zA-Z0-9(_)ㄱ-ㅎㅏ-ㅣ가-힣]{1,})");
+    final RegExp regexp = RegExp(r"[a-zA-Z0-9(_)ㄱ-ㅎㅏ-ㅣ가-힣]{1,}");
     final Iterable<RegExpMatch> allMatches = regexp.allMatches(text);
 
-    if (allMatches.length > 1) {
+    if ((text.length == 1 && text.endsWith(" ")) || allMatches.length != 1) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
               content: Text('Please enter valid letters', style: TextStyle(color: Colors.pinkAccent)),
