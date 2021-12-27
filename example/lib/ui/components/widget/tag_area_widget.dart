@@ -72,9 +72,13 @@ class _TagAreaWidgetState extends State<TagAreaWidget> with Observer {
                   _tags.removeAt(index);
 
                   final HashTag newHashTag = HashTag.buildFromExisting(widget.hashTag, _tags);
-                  Observable.instance.notifyObservers(["_HashTagComponentState"], notifyName : "removed", map: {"hashTag": newHashTag});
+
                   Observable.instance.notifyObservers(["_SaveButtonWidgetState"], notifyName : "removed", map: {"hashTag": newHashTag});
-                  Observable.instance.notifyObservers(["_UneditableHashTagComponentState"], notifyName : "removed", map: {"hashTag": newHashTag});
+                  if (widget.editMode) {
+                    Observable.instance.notifyObservers(["_HashTagComponentState"], notifyName : "removed", map: {"hashTag": newHashTag});
+                  } else {
+                    Observable.instance.notifyObservers(["_UneditableHashTagComponentState"], notifyName : "removed", map: {"hashTag": newHashTag});
+                  }
                 }
               });
               //required

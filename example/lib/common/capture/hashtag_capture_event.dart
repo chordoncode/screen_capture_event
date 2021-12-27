@@ -28,7 +28,12 @@ class HashTagCaptureEvent {
     _screenCaptureEvent.addScreenShotListener((filePath) async {
       captured = true;
 
-      HashTag? hashTag = await _findHashTagFromScreenShot(filePath);
+      FileSystemEntity? fileSystemEntity = await FileUtils.getLastScreenShot(filePath);
+      if (fileSystemEntity == null) {
+        AppNotification().showNotification(-1, 'Grab Tags', 'Failed. Please retry!');
+        return;
+      }
+      HashTag? hashTag = await _findHashTagFromScreenShot(fileSystemEntity!);
 
       if (hashTag != null) {
         AppNotification().showNotification(-1, 'Grab Tags', 'Copy tags!');
@@ -47,22 +52,20 @@ class HashTagCaptureEvent {
     });
   }
 
-  Future<HashTag?> _findHashTagFromScreenShot(String path) async {
-    FileSystemEntity fileSystemEntity = await FileUtils.getLastScreenShot(path);
-
+  Future<HashTag?> _findHashTagFromScreenShot(FileSystemEntity fileSystemEntity) async {
     final List<String> tags = await HashTagDetector().extractHashtagFromFilepath(fileSystemEntity.path);
     if (tags.isNotEmpty) {
-      final int id = await _save(tags, path);
+      final int id = await _save(tags, fileSystemEntity);
       return HashTag.buildNew(id, tags);
     }
     return Future.value(null);
   }
 
-  Future<int> _save(List<String> tags, String path) async {
+  Future<int> _save(List<String> tags, FileSystemEntity fileSystemEntity) async {
     // save widget.hashTag to local DB.
     return HashTagRepository.save({
       'tags': tags.join(" "),
-      'title': 'grabbed from ' +  await FileUtils.getCurrentApp(path)
+      'title': 'grabbed from ' +  await FileUtils.getCurrentApp(fileSystemEntity)
     });
   }
 

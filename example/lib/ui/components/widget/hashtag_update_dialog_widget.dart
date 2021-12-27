@@ -40,10 +40,15 @@ class _HashTagUpdateDialogWidgetState extends State<HashTagUpdateDialogWidget> {
           maxLength: 30,
           style: const TextStyle(color: Colors.white, fontSize: 14),
           controller: _inputController,
-          decoration: const InputDecoration(
-            labelStyle: TextStyle(color: Colors.white),
-            counterStyle: TextStyle(color: Colors.white, fontSize: 8),
-            errorStyle: TextStyle(color: Colors.red, fontSize: 8),
+          cursorColor: Colors.white,
+          decoration: InputDecoration(
+            hoverColor: Colors.white,
+            labelStyle: const TextStyle(color: Colors.white),
+            counterStyle: const TextStyle(color: Colors.white, fontSize: 8),
+            errorStyle: const TextStyle(color: Colors.red, fontSize: 8),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey.shade900)
+            ),
             labelText: 'Enter a new tag'
           ),
         ),
