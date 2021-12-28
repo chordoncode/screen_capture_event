@@ -77,6 +77,7 @@ public class ScreenCaptureEventPlugin implements FlutterPlugin, MethodCallHandle
                 handler.post(() -> {
                   for(String fullPath : paths){
                     File file = new File(fullPath + filename);
+
                     if(file.exists()){
                       if(getMimeType(file.getPath()).contains("video")){
                         stopAllRecordWatcher();
@@ -97,9 +98,11 @@ public class ScreenCaptureEventPlugin implements FlutterPlugin, MethodCallHandle
             fileObserver = new FileObserver(path.getPath()) {
               @Override
               public void onEvent(int event, final String filename) {
-                updateScreenRecordStatus();
-                File file = new File(path.getPath() + filename);
+
+                //updateScreenRecordStatus();
                 if (event == FileObserver.CREATE) {
+                  File file = new File(path.getPath() + filename);
+
                   handler.post(() -> {
                     if(file.exists()){
                       if(getMimeType(file.getPath()).contains("video")){

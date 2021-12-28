@@ -10,26 +10,34 @@ class FileUtils {
   // /storage/emulated/0/DCIM/Screenshots/.pending-1641176466-Screenshot_20211227-112106_Instagram.jpg
 
   static Future<FileSystemEntity?> getLastScreenShot(String path) async {
+    return await Future.delayed(const Duration(milliseconds: 200), () async {
 
-    Directory baseDir = Directory(path.substring(0, path.lastIndexOf("/")));
-    String expectedFileName = path.substring(path.lastIndexOf("Screenshot"));
+      File currentFile = File(path);
+      if (currentFile.existsSync() && path.contains("/Screenshot_")) {
+        return currentFile;
 
-    print("expectedFileName: " + expectedFileName);
+      } else {
+        Directory baseDir = Directory(path.substring(0, path.lastIndexOf("/")));
+        String expectedFileName = path.substring(path.lastIndexOf("Screenshot"));
 
-    FileSystemEntity fileSystemEntity = baseDir.listSync().last;
+        //print("expectedFileName: " + expectedFileName);
 
-    int duration = 100;
-    for (int i = 0; i < 6; i++) {
-      if (fileSystemEntity.path.contains("/" + expectedFileName)) {
-        return fileSystemEntity;
+        FileSystemEntity fileSystemEntity = baseDir.listSync().last;
+
+        int duration = 100;
+        for (int i = 0; i < 6; i++) {
+          if (fileSystemEntity.path.contains("/" + expectedFileName)) {
+            return File(fileSystemEntity.path);
+          }
+
+          duration = duration * (i + 1);
+          fileSystemEntity = await Future.delayed(Duration(milliseconds: duration), () {
+            return baseDir.listSync().last;
+          });
+        }
+        return null;
       }
-
-      duration = duration * (i + 1);
-      fileSystemEntity = await Future.delayed(Duration(milliseconds: duration), () {
-        return baseDir.listSync().last;
-      });
-    }
-    return null;
+    });
   }
 
   static Future<String> getCurrentApp(FileSystemEntity fileSystemEntity) async {
