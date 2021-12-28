@@ -13,6 +13,7 @@ import 'package:bringtoforeground/bringtoforeground.dart';
 import 'dart:async';
 
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
+import 'package:system_alert_window/system_alert_window.dart';
 
 import 'common/storage/shared_storage.dart';
 
@@ -35,10 +36,12 @@ void main() {
     await PaymentService.instance.init();
     await MobileAds.instance.initialize();
 
+    /*
     if (!kReleaseMode) {
       RequestConfiguration configuration = RequestConfiguration(testDeviceIds: ["0FFD109BEDA7014C5C6D41BC6A1B0CFD"]);
       MobileAds.instance.updateRequestConfiguration(configuration);
     }
+     */
 
     await SharedStorage().init();
 
@@ -63,6 +66,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     AppNotification().requestPermissions();
+    _requestPermissions();
 
     //SystemAlertWindow.registerOnClickListener(callBack);
   }
@@ -94,5 +98,9 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
       )
     );
+  }
+
+  Future<void> _requestPermissions() async {
+    await SystemAlertWindow.requestPermissions(prefMode: SystemWindowPrefMode.OVERLAY);
   }
 }

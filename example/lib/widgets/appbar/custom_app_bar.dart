@@ -103,7 +103,11 @@ class _CustomAppBarState extends State<CustomAppBar> {
   }
 
   void _activate() {
-    AppNotification().showNotification(-1, 'Grab Tags', 'Grab Tags has been activated.');
+    AppNotification().showNotification(-1, 'Grab Tags', 'Grab Tags has been activated.').then((value) {
+      Future.delayed(const Duration(milliseconds: 2000), () {
+        AppNotification().cancelAllNotifications();
+      });
+    });
     HashTagCaptureEvent().screenCaptureEvent.watch();
 
     showPlatformDialog(
@@ -133,6 +137,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
   void _deactivate() {
     //AppNotification().showNotification(-1, 'Grab Tags', 'Grab Tags has been deactivated.');
+    AppNotification().cancelAllNotifications();
     HashTagCaptureEvent().screenCaptureEvent.dispose();
 
     if (!PaymentService.instance.isPro()) {

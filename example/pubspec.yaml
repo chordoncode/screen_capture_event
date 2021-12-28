@@ -1,6 +1,6 @@
 name: grab_tags
 description: Demonstrates how to use the screen_capture_event plugin.
-version: 1.0.0+7
+version: 1.0.0+8
 publish_to: 'none'
 
 environment:
@@ -33,7 +33,7 @@ dependencies:
 
   provider: ^6.0.1
   flutter_screenutil: ^5.0.0+2
-  #system_alert_window: ^0.5.0+1
+  system_alert_window: ^0.5.0+1
 
   in_app_purchase: ^2.0.0
   shared_preferences: ^2.0.0
