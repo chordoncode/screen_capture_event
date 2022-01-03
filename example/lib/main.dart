@@ -36,12 +36,12 @@ void main() {
     await PaymentService.instance.init();
     await MobileAds.instance.initialize();
 
-    /*
+    bool kReleaseMode = true;
     if (!kReleaseMode) {
-      RequestConfiguration configuration = RequestConfiguration(testDeviceIds: ["0FFD109BEDA7014C5C6D41BC6A1B0CFD"]);
+      RequestConfiguration configuration = RequestConfiguration(testDeviceIds: ["0FFD109BEDA7014C5C6D41BC6A1B0CFD", "D66CEE31CB3274445A21D70E43868F6E"]);
       MobileAds.instance.updateRequestConfiguration(configuration);
     }
-     */
+
 
     await SharedStorage().init();
 

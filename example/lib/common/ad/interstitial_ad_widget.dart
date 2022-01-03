@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class InterstitialAdWidget {
-  static final Map<String, String> UNIT_ID = true //kReleaseMode
+  static bool kReleaseMode = true;
+  static final Map<String, String> UNIT_ID = kReleaseMode
       ? {
     //'ios': '[YOUR iOS AD UNIT ID]',
     'android': 'ca-app-pub-7909363627067674/3043614120',

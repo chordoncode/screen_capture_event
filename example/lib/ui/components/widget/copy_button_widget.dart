@@ -3,12 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:grab_tags/common/ad/interstitial_ad_widget.dart';
 import 'package:grab_tags/common/payment/payment_service.dart';
 import 'package:grab_tags/model/hashtag.dart';
-import 'package:grab_tags/ui/pages/main/layout.dart';
 
 class CopyButtonWidget extends StatefulWidget {
   final HashTag hashTag;
-  final int index;
-  const CopyButtonWidget({Key? key, required this.hashTag, required this.index}) : super(key: key);
+  const CopyButtonWidget({Key? key, required this.hashTag}) : super(key: key);
 
   @override
   _CopyButtonWidgetState createState() => _CopyButtonWidgetState();

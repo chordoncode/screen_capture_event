@@ -10,7 +10,7 @@ import 'package:grab_tags/common/payment/payment_service.dart';
 import 'package:grab_tags/common/util/file_utils.dart';
 import 'package:grab_tags/model/hashtag.dart';
 import 'package:grab_tags/repositories/hashtag_repository.dart';
-import 'package:grab_tags/ui/components/hashtag_component.dart';
+import 'package:grab_tags/ui/components/editable_hashtag_component.dart';
 import 'package:grab_tags/widgets/appbar/custom_app_bar.dart';
 import 'package:grab_tags/widgets/center_indicator.dart';
 
@@ -65,7 +65,7 @@ class _EditHashTagPageState extends LifecycleWatcherState<EditHashTagPage> {
         child: ListView.builder(
             itemCount: 1,
             itemBuilder: (context, index) {
-              return HashTagComponent(hashTag: snapshot.data!);
+              return EditableHashTagComponent(hashTag: snapshot.data!);
             }
         )
     );

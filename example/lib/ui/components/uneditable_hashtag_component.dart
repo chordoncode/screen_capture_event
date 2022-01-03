@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_observer/Observable.dart';
-import 'package:flutter_observer/Observer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_tags/flutter_tags.dart';
+import 'package:grab_tags/common/ad/interstitial_ad_widget.dart';
+import 'package:grab_tags/common/payment/payment_service.dart';
 import 'package:grab_tags/model/hashtag.dart';
 import 'package:grab_tags/ui/components/widget/copy_button_widget.dart';
-import 'package:grab_tags/ui/components/widget/edit_button_widget.dart';
-import 'package:grab_tags/ui/components/widget/tag_area_widget.dart';
+import 'package:grab_tags/ui/pages/mytag/edit_hashtag_page.dart';
 
 class UneditableHashTagComponent extends StatefulWidget {
   final HashTag hashTag;
@@ -18,20 +18,13 @@ class UneditableHashTagComponent extends StatefulWidget {
   _UneditableHashTagComponentState createState() => _UneditableHashTagComponentState();
 }
 
-class _UneditableHashTagComponentState extends State<UneditableHashTagComponent> with Observer {
+class _UneditableHashTagComponentState extends State<UneditableHashTagComponent> {
   late HashTag _hashTag;
 
   @override
   void initState() {
     super.initState();
     _hashTag = widget.hashTag;
-    Observable.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    Observable.instance.removeObserver(this);
-    super.dispose();
   }
 
   @override
@@ -49,15 +42,15 @@ class _UneditableHashTagComponentState extends State<UneditableHashTagComponent>
                 children: [
                   Row(
                     children: [
-                      CopyButtonWidget(hashTag: _hashTag, index: widget.index),
+                      CopyButtonWidget(hashTag: _hashTag),
                       const SizedBox(width: 5,),
-                      EditButtonWidget(hashTag: _hashTag, callback: widget.callback, index: widget.index)
+                      _buildEditButtonWidget()
                     ]
                   )
                 ],
               ),
               SizedBox(height: 10.h),
-              TagAreaWidget(hashTag: _hashTag, editMode: false)
+              _buildTagAreaWidget(_hashTag)
             ],
           )
           ),
@@ -66,12 +59,59 @@ class _UneditableHashTagComponentState extends State<UneditableHashTagComponent>
     );
   }
 
-  @override
-  update(Observable observable, String? notifyName, Map? map) {
-    if (notifyName == 'removed') {
-      setState(() {
-        _hashTag = map!['hashTag'];
-      });
-    }
+  Widget _buildEditButtonWidget() {
+    return SizedBox(
+      height: 20,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          primary: Colors.white, // background
+        ),
+        onPressed: () async {
+          if (!PaymentService.instance.isPro()) {
+            final InterstitialAdWidget _interstitialAdWidget = InterstitialAdWidget();
+            _interstitialAdWidget.init(context, true);
+          }
+
+          await Navigator.push(context,
+              MaterialPageRoute(builder: (context) => EditHashTagPage(hashTagId: widget.hashTag.id)));
+
+          setState(() {
+            widget.callback();
+          });
+        },
+        child: const Text(
+            'EDIT',
+            style: TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 10
+            )
+        )
+      )
+    );
+  }
+
+  Widget _buildTagAreaWidget(HashTag hashTag) {
+    List<String> tags = hashTag.tags.split(" ");
+
+    return Tags(
+      alignment: WrapAlignment.start,
+      itemCount: tags.length, // required
+      itemBuilder: (int index){
+        final String tag = tags[index];
+        return ItemTags(
+            key: Key(index.toString()),
+            index: index, // required
+            active: true,
+            pressEnabled: false,
+            title: tag.replaceAll('#', ''),
+            textStyle: const TextStyle(fontSize: 10),
+            combine: ItemTagsCombine.withTextBefore,
+            removeButton: null
+        );
+      },
+    );
   }
 }

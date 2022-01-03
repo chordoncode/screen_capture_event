@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_observer/Observable.dart';
 
 class HashTagUpdateDialogWidget extends StatefulWidget {
   final String selectedTag;
@@ -65,7 +64,7 @@ class _HashTagUpdateDialogWidgetState extends State<HashTagUpdateDialogWidget> {
                     primary: Colors.white,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.pop(context, null);
                 },
                 child: const Text(
                     'Cancel',
@@ -84,8 +83,7 @@ class _HashTagUpdateDialogWidgetState extends State<HashTagUpdateDialogWidget> {
                 ),
                 onPressed: () {
                   final String updatedHashTag = '#' + _inputController.text.trim();
-                  Observable.instance.notifyObservers(["_TagAreaWidgetState"], notifyName : "updated", map: {"updatedHashTag": updatedHashTag, "index": widget.index});
-                  Navigator.of(context).pop();
+                  Navigator.pop(context, updatedHashTag);
                 },
                 child: const Text(
                     'OK',

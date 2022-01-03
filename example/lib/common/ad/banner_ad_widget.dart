@@ -12,7 +12,8 @@ class BannerAdWidget extends StatefulWidget {
 }
 
 class _BannerAdWidgetState extends State<BannerAdWidget> {
-  static final Map<String, String> UNIT_ID = true //kReleaseMode
+  static bool kReleaseMode = true;
+  static final Map<String, String> UNIT_ID = kReleaseMode
       ? {
     //'ios': '[YOUR iOS AD UNIT ID]',
     'android': 'ca-app-pub-7909363627067674/6052920840',

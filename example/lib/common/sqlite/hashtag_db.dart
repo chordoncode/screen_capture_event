@@ -9,7 +9,7 @@ import 'package:sqflite/sqflite.dart';
  * We can get DateTime by DateTime.fromMillisecondsSinceEpoch(yourValue);
  */
 class HashTagDb {
-  static const String DB_NAME = 'hashtag_database.db';
+  static const String DB_NAME = 'grabtags_database.db';
   static const Map<HashTagTable, String> DDL = {
     HashTagRepository.TABLE: HashTagRepository.DDL
   };
