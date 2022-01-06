@@ -30,6 +30,8 @@ class _SettingPageState extends LifecycleWatcherState<SettingPage> {
     const double icon_size = 25;
 
     List<dynamic> _subMenus = [
+      //fixme: 사업자 등록 후 주석 제거
+      /*
       SubMenuTile(SubMenu(
         icon: const Icon(Icons.shopping_cart, size: icon_size, color: Colors.white),
         title: Row(
@@ -46,6 +48,7 @@ class _SettingPageState extends LifecycleWatcherState<SettingPage> {
           ],
         ),
         widget: const SubscriptionPage())),
+       */
       SubMenuTile(SubMenu(
         icon: const Icon(Icons.mode_edit_outline_outlined, size: icon_size, color: Colors.white),
         title: const Text("Open source license", style: TextStyle(fontSize: 14, color: Colors.white)),
@@ -68,8 +71,9 @@ class _SettingPageState extends LifecycleWatcherState<SettingPage> {
     if (!PaymentService.instance.isPro()) {
       widgets.add(const BannerAdWidget());
       widgets.add(const SizedBox(height: 20,));
-      widgets.add(const SubscribePromotion(clickable: true));
-      widgets.add(const SizedBox(height: 20,));
+      //fixme: 사업자 등록 후 주석 제거
+      //widgets.add(const SubscribePromotion(clickable: true));
+      //widgets.add(const SizedBox(height: 20,));
     }
     widgets.add(
       Expanded(

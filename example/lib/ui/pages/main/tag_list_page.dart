@@ -60,8 +60,9 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
     if (!PaymentService.instance.isPro()) {
       widgets.add(const BannerAdWidget());
       widgets.add(const SizedBox(height: 20,));
-      widgets.add(const SubscribePromotion(clickable: true));
-      widgets.add(const SizedBox(height: 20,));
+      //fixme: 사업자 등록 후 주석 제거
+      //widgets.add(const SubscribePromotion(clickable: true));
+      //widgets.add(const SizedBox(height: 20,));
     }
     widgets.add(
       SizedBox(
@@ -106,8 +107,9 @@ class _TagListPageState extends LifecycleWatcherState<TagListPage> {
     if (!PaymentService.instance.isPro()) {
       widgets.add(const BannerAdWidget());
       widgets.add(const SizedBox(height: 20,));
-      widgets.add(const SubscribePromotion(clickable: true));
-      widgets.add(const SizedBox(height: 20,));
+      //fixme: 사업자 등록 후 주석 제거
+      //widgets.add(const SubscribePromotion(clickable: true));
+      //widgets.add(const SizedBox(height: 20,));
     }
     widgets.add(
       Expanded(

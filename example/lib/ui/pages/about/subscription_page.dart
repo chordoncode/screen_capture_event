@@ -63,8 +63,9 @@ class _SubscriptionPageState extends LifecycleWatcherState<SubscriptionPage> {
 
     if (!PaymentService.instance.isPro()) {
       widgets.add(const BannerAdWidget());
-      widgets.add(const SizedBox(height: 20,));
-      widgets.add(const SubscribePromotion(clickable: false));
+      //fixme: 사업자 등록 후 주석 제거
+      //widgets.add(const SizedBox(height: 20,));
+      //widgets.add(const SubscribePromotion(clickable: false));
       widgets.add(const SizedBox(height: 20,));
     }
     widgets.add(
