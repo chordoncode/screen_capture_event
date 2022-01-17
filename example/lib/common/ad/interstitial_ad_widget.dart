@@ -37,6 +37,7 @@ class InterstitialAdWidget {
       _openAd = true;
     }
 
+    _openAd = false;
     if (_openAd) {
       return _createInterstitialAd(context);
     }
