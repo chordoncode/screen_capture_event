@@ -142,7 +142,8 @@ class PaymentService {
   }
 
   bool isPro() {
-    return _isAvailable && _products.isNotEmpty ? _purchases.isNotEmpty : SharedStorage.read(SharedStorageKey.pro)??false;
+    return false;
+    //return _isAvailable && _products.isNotEmpty ? _purchases.isNotEmpty : SharedStorage.read(SharedStorageKey.pro)??false;
   }
 
   bool isAvailable() {
