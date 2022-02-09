@@ -40,7 +40,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "io.grab_tags"
+        applicationId "io.grab_hashtag"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
@@ -72,6 +72,7 @@ flutter {
 dependencies {
     implementation 'com.android.billingclient:billing:3.0.2'
     implementation 'com.google.android.gms:play-services-ads:20.5.0'
-    implementation platform('com.google.firebase:firebase-bom:29.0.3')
+    implementation platform('com.google.firebase:firebase-bom:29.0.4')
     implementation 'com.google.firebase:firebase-analytics'
+    //implementation 'com.google.firebase:firebase-ads:18.0.0'
 }

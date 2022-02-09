@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:grab_tags/common/appversion/app_version.dart';
-import 'package:grab_tags/common/detector/hashtag_detector.dart';
-import 'package:grab_tags/common/notification/app_notification.dart';
-import 'package:grab_tags/common/payment/payment_service.dart';
-import 'package:grab_tags/common/permission/permission_request.dart';
-import 'package:grab_tags/common/storage/shared_storage_key.dart';
-import 'package:grab_tags/ui/pages/main/layout.dart';
+import 'package:grab_hashtag/common/appversion/app_version.dart';
+import 'package:grab_hashtag/common/detector/hashtag_detector.dart';
+import 'package:grab_hashtag/common/notification/app_notification.dart';
+import 'package:grab_hashtag/common/payment/payment_service.dart';
+import 'package:grab_hashtag/common/permission/permission_request.dart';
+import 'package:grab_hashtag/common/storage/shared_storage_key.dart';
+import 'package:grab_hashtag/ui/pages/main/layout.dart';
 import 'package:bringtoforeground/bringtoforeground.dart';
 import 'dart:async';
 
@@ -89,7 +89,7 @@ class _MyAppState extends State<MyApp> {
     return ScreenUtilInit(
       designSize: const Size(392, 759),
       builder: () => MaterialApp(
-        title: "Grab Tags",
+        title: "Grab Hashtag",
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.grey.shade900,
           primarySwatch: Colors.blueGrey,

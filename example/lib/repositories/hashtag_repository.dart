@@ -1,6 +1,6 @@
-import 'package:grab_tags/common/sqlite/hashtag_db.dart';
-import 'package:grab_tags/common/sqlite/hashtag_table.dart';
-import 'package:grab_tags/common/util/time_utils.dart';
+import 'package:grab_hashtag/common/sqlite/hashtag_db.dart';
+import 'package:grab_hashtag/common/sqlite/hashtag_table.dart';
+import 'package:grab_hashtag/common/util/time_utils.dart';
 
 class HashTagRepository {
   static const HashTagTable TABLE = HashTagTable.HASHTAG;

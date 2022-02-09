@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:grab_tags/common/appversion/app_version.dart';
+import 'package:grab_hashtag/common/appversion/app_version.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppVersionWidget extends StatelessWidget {
@@ -46,7 +46,7 @@ class AppVersionWidget extends StatelessWidget {
   void _moveToDownloadPage(context) async {
     String? url; // FIX: update link
     if (Platform.isAndroid) {
-      url = "https://play.google.com/store/apps/details?id=io.grab_tags";
+      url = "https://play.google.com/store/apps/details?id=io.grab_hashtag";
     }
 
     if (await canLaunch(url!)) {

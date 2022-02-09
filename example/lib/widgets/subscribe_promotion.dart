@@ -1,8 +1,8 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:neon/neon.dart';
-import 'package:grab_tags/ui/pages/main/layout.dart';
-import 'package:grab_tags/ui/pages/about/subscription_page.dart';
+import 'package:grab_hashtag/ui/pages/main/layout.dart';
+import 'package:grab_hashtag/ui/pages/about/subscription_page.dart';
 
 class SubscribePromotion extends StatelessWidget {
   final bool clickable;

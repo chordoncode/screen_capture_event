@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grab_tags/main.dart';
+import 'package:grab_hashtag/main.dart';
 
 abstract class LifecycleWatcherState<T extends StatefulWidget> extends State<T>
     with WidgetsBindingObserver {

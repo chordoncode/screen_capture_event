@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:grab_tags/ui/pages/main/setting_page.dart';
-import 'package:grab_tags/ui/pages/main/tag_list_page.dart';
-import 'package:grab_tags/widgets/appbar/custom_app_bar.dart';
+import 'package:grab_hashtag/ui/pages/main/setting_page.dart';
+import 'package:grab_hashtag/ui/pages/main/tag_list_page.dart';
+import 'package:grab_hashtag/widgets/appbar/custom_app_bar.dart';
 import 'dart:io';
 
 class Layout extends StatefulWidget {

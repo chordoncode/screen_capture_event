@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tags/flutter_tags.dart';
-import 'package:grab_tags/common/ad/interstitial_ad_widget.dart';
-import 'package:grab_tags/common/payment/payment_service.dart';
-import 'package:grab_tags/model/hashtag.dart';
-import 'package:grab_tags/ui/components/widget/copy_button_widget.dart';
-import 'package:grab_tags/ui/pages/mytag/edit_hashtag_page.dart';
+import 'package:grab_hashtag/common/ad/interstitial_ad_widget.dart';
+import 'package:grab_hashtag/common/payment/payment_service.dart';
+import 'package:grab_hashtag/model/hashtag.dart';
+import 'package:grab_hashtag/ui/components/widget/copy_button_widget.dart';
+import 'package:grab_hashtag/ui/pages/mytag/edit_hashtag_page.dart';
 
 class UneditableHashTagComponent extends StatefulWidget {
   final HashTag hashTag;

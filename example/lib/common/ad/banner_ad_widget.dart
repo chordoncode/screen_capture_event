@@ -16,7 +16,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   static final Map<String, String> UNIT_ID = kReleaseMode
       ? {
     //'ios': '[YOUR iOS AD UNIT ID]',
-    'android': 'ca-app-pub-7909363627067674/6052920840',
+    'android': 'ca-app-pub-7909363627067674/3092179570',
   }
       : {
     'ios': 'ca-app-pub-3940256099942544/2934735716',
@@ -25,7 +25,9 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
   BannerAd banner = BannerAd(
     listener: BannerAdListener(
-      onAdFailedToLoad: (Ad ad, LoadAdError error) {},
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        print(error);
+      },
       onAdLoaded: (_) {},
     ),
     size: AdSize.banner,

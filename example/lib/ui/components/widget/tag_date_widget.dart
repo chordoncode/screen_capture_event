@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grab_tags/common/util/time_utils.dart';
-import 'package:grab_tags/model/hashtag.dart';
+import 'package:grab_hashtag/common/util/time_utils.dart';
+import 'package:grab_hashtag/model/hashtag.dart';
 
 class TagDateWidget extends StatelessWidget {
   final HashTag hashTag;

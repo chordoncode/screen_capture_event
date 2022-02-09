@@ -1,12 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.grab_tags">
+    package="io.grab_hashtag">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
    <application
-        android:label="Grab Tags"
+        android:label="Grab Hashtag"
        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity

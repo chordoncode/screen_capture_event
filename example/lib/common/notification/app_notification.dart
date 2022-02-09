@@ -43,9 +43,9 @@ class AppNotification {
   Future<void> showNotification(int id, String title, String body) async {
 
     const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'Grab Tags',
-        'Grab Tags',
-        channelDescription: 'Notification from Grab Tags',
+        'Grab Hashtag',
+        'Grab Hashtag',
+        channelDescription: 'Notification from Grab Hashtag',
         importance: Importance.max,
         priority: Priority.high);
 

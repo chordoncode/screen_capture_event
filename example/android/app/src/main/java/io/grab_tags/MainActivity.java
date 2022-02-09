@@ -1,4 +1,4 @@
-package io.grab_tags;
+package io.grab_hashtag;
 
 import io.flutter.embedding.android.FlutterActivity;
 

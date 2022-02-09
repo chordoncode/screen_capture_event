@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:grab_tags/common/ad/banner_ad_widget.dart';
-import 'package:grab_tags/common/lifecycle/lifecycle_watcher_state.dart';
-import 'package:grab_tags/common/payment/payment_service.dart';
-import 'package:grab_tags/widgets/appbar/custom_app_bar.dart';
-import 'package:grab_tags/widgets/button/custom_buttons.dart';
-import 'package:grab_tags/widgets/center_indicator.dart';
-import 'package:grab_tags/widgets/subscribe_promotion.dart';
+import 'package:grab_hashtag/common/ad/banner_ad_widget.dart';
+import 'package:grab_hashtag/common/lifecycle/lifecycle_watcher_state.dart';
+import 'package:grab_hashtag/common/payment/payment_service.dart';
+import 'package:grab_hashtag/widgets/appbar/custom_app_bar.dart';
+import 'package:grab_hashtag/widgets/button/custom_buttons.dart';
+import 'package:grab_hashtag/widgets/center_indicator.dart';
+import 'package:grab_hashtag/widgets/subscribe_promotion.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SubscriptionPage extends StatefulWidget {

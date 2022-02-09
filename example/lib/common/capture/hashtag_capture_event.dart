@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:bringtoforeground/bringtoforeground.dart';
 import 'package:flutter/services.dart';
 import 'package:screen_capture_event/screen_capture_event.dart';
-import 'package:grab_tags/common/detector/hashtag_detector.dart';
-import 'package:grab_tags/common/notification/app_notification.dart';
-import 'package:grab_tags/common/util/file_utils.dart';
-import 'package:grab_tags/main.dart';
-import 'package:grab_tags/model/hashtag.dart';
-import 'package:grab_tags/repositories/hashtag_repository.dart';
+import 'package:grab_hashtag/common/detector/hashtag_detector.dart';
+import 'package:grab_hashtag/common/notification/app_notification.dart';
+import 'package:grab_hashtag/common/util/file_utils.dart';
+import 'package:grab_hashtag/main.dart';
+import 'package:grab_hashtag/model/hashtag.dart';
+import 'package:grab_hashtag/repositories/hashtag_repository.dart';
 
 class HashTagCaptureEvent {
   static final HashTagCaptureEvent _instance = HashTagCaptureEvent._internal();
@@ -30,20 +30,20 @@ class HashTagCaptureEvent {
 
       FileSystemEntity? fileSystemEntity = await FileUtils.getLastScreenShot(filePath);
       if (fileSystemEntity == null) {
-        AppNotification().showNotification(-1, 'Grab Tags', 'Failed. Please retry!');
+        AppNotification().showNotification(-1, 'Grab Hashtag', 'Failed. Please retry!');
         return;
       }
       HashTag? hashTag = await _findHashTagFromScreenShot(fileSystemEntity!);
 
       if (hashTag != null) {
-        AppNotification().showNotification(-1, 'Grab Tags', 'Copy tags!');
+        AppNotification().showNotification(-1, 'Grab Hashtag', 'Copy tags!');
         /*
         _copyToClipboard(hashTag).then((value) =>
-         AppNotification().showNotification(-1, 'Grab tags', 'Paste copied tags!')
+         AppNotification().showNotification(-1, 'Grab Hashtag', 'Paste copied tags!')
         );
         */
       } else {
-        AppNotification().showNotification(-1, 'Grab Tags', 'No tags. Please retry!');
+        AppNotification().showNotification(-1, 'Grab Hashtag', 'No tags. Please retry!');
       }
 
       //if (!PaymentService.instance.isPro()) {

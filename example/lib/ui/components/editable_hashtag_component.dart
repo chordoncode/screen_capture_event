@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tags/flutter_tags.dart';
-import 'package:grab_tags/common/ad/interstitial_ad_widget.dart';
-import 'package:grab_tags/common/payment/payment_service.dart';
-import 'package:grab_tags/model/hashtag.dart';
-import 'package:grab_tags/repositories/hashtag_repository.dart';
-import 'package:grab_tags/ui/components/widget/copy_button_widget.dart';
-import 'package:grab_tags/ui/components/widget/hashtag_update_dialog_widget.dart';
-import 'package:grab_tags/ui/components/widget/tag_date_widget.dart';
+import 'package:grab_hashtag/common/ad/interstitial_ad_widget.dart';
+import 'package:grab_hashtag/common/payment/payment_service.dart';
+import 'package:grab_hashtag/model/hashtag.dart';
+import 'package:grab_hashtag/repositories/hashtag_repository.dart';
+import 'package:grab_hashtag/ui/components/widget/copy_button_widget.dart';
+import 'package:grab_hashtag/ui/components/widget/hashtag_update_dialog_widget.dart';
+import 'package:grab_hashtag/ui/components/widget/tag_date_widget.dart';
 
 class EditableHashTagComponent extends StatefulWidget {
   final HashTag hashTag;

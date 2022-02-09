@@ -1,4 +1,4 @@
-import 'package:grab_tags/repositories/hashtag_repository.dart';
+import 'package:grab_hashtag/repositories/hashtag_repository.dart';
 
 class HashTag {
   final int id;

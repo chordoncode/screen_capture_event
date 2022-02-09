@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "340432202025",
-    "project_id": "grab-tags",
-    "storage_bucket": "grab-tags.appspot.com"
+    "project_number": "981145058030",
+    "project_id": "grab-hashtag",
+    "storage_bucket": "grab-hashtag.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:340432202025:android:a05f7ef061d484756a6f38",
+        "mobilesdk_app_id": "1:981145058030:android:3ecc343170fe939e8891ff",
         "android_client_info": {
-          "package_name": "io.grab_tags"
+          "package_name": "io.grab_hashtag"
         }
       },
       "oauth_client": [
         {
-          "client_id": "340432202025-3a1d1k803svo0rb07r09reiuq0gtf3ht.apps.googleusercontent.com",
+          "client_id": "981145058030-sm3mveafh1t9esolbs572hvd5fomd5ka.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBO_Gei-51X-fP9g3PAUVa_hv9ZEB9hR8Y"
+          "current_key": "AIzaSyCGkl6PlNmz7RZwClPD3fT-zW338vsW8zs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "340432202025-3a1d1k803svo0rb07r09reiuq0gtf3ht.apps.googleusercontent.com",
+              "client_id": "981145058030-sm3mveafh1t9esolbs572hvd5fomd5ka.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:grab_tags/common/ad/interstitial_ad_widget.dart';
-import 'package:grab_tags/common/payment/payment_service.dart';
-import 'package:grab_tags/model/hashtag.dart';
+import 'package:grab_hashtag/common/ad/interstitial_ad_widget.dart';
+import 'package:grab_hashtag/common/payment/payment_service.dart';
+import 'package:grab_hashtag/model/hashtag.dart';
 
 class CopyButtonWidget extends StatefulWidget {
   final HashTag hashTag;

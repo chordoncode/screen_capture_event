@@ -6,8 +6,8 @@
 /// Copyright (C) 2020 Liem Vo.
 ///
 import 'package:flutter/material.dart';
-import 'package:grab_tags/common/ad/interstitial_ad_widget.dart';
-import 'package:grab_tags/common/payment/payment_service.dart';
+import 'package:grab_hashtag/common/ad/interstitial_ad_widget.dart';
+import 'package:grab_hashtag/common/payment/payment_service.dart';
 
 class ListExpandableWidget extends StatefulWidget {
   // optional property and default value is false

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grab_tags/ui/pages/main/setting_page.dart';
+import 'package:grab_hashtag/ui/pages/main/setting_page.dart';
 
 class SubMenuTile extends StatelessWidget {
   const SubMenuTile(this._subMenu, {Key? key}) : super(key: key);

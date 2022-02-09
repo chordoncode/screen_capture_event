@@ -2,17 +2,17 @@ import 'dart:io';
 import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit_for_korean/google_ml_kit_for_korean.dart';
-import 'package:grab_tags/common/ad/banner_ad_widget.dart';
-import 'package:grab_tags/common/ad/interstitial_ad_widget.dart';
-import 'package:grab_tags/common/detector/hashtag_detector.dart';
-import 'package:grab_tags/common/lifecycle/lifecycle_watcher_state.dart';
-import 'package:grab_tags/common/payment/payment_service.dart';
-import 'package:grab_tags/common/util/file_utils.dart';
-import 'package:grab_tags/model/hashtag.dart';
-import 'package:grab_tags/repositories/hashtag_repository.dart';
-import 'package:grab_tags/ui/components/editable_hashtag_component.dart';
-import 'package:grab_tags/widgets/appbar/custom_app_bar.dart';
-import 'package:grab_tags/widgets/center_indicator.dart';
+import 'package:grab_hashtag/common/ad/banner_ad_widget.dart';
+import 'package:grab_hashtag/common/ad/interstitial_ad_widget.dart';
+import 'package:grab_hashtag/common/detector/hashtag_detector.dart';
+import 'package:grab_hashtag/common/lifecycle/lifecycle_watcher_state.dart';
+import 'package:grab_hashtag/common/payment/payment_service.dart';
+import 'package:grab_hashtag/common/util/file_utils.dart';
+import 'package:grab_hashtag/model/hashtag.dart';
+import 'package:grab_hashtag/repositories/hashtag_repository.dart';
+import 'package:grab_hashtag/ui/components/editable_hashtag_component.dart';
+import 'package:grab_hashtag/widgets/appbar/custom_app_bar.dart';
+import 'package:grab_hashtag/widgets/center_indicator.dart';
 
 class EditHashTagPage extends StatefulWidget {
   final int hashTagId;

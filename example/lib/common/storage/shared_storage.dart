@@ -1,5 +1,5 @@
 import 'package:get_storage/get_storage.dart';
-import 'package:grab_tags/common/storage/shared_storage_key.dart';
+import 'package:grab_hashtag/common/storage/shared_storage_key.dart';
 
 class SharedStorage {
   static SharedStorage _instance = SharedStorage._internal();
