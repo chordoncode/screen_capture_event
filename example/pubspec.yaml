@@ -1,6 +1,6 @@
 name: grab_hashtag
 description: Demonstrates how to use the screen_capture_event plugin.
-version: 1.0.0+1
+version: 1.0.0+2
 publish_to: 'none'
 
 environment:

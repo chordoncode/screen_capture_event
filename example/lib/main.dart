@@ -30,10 +30,10 @@ void main() {
       // For play billing library 2.0 on Android, it is mandatory to call
       // [enablePendingPurchases](https://developer.android.com/reference/com/android/billingclient/api/BillingClient.Builder.html#enablependingpurchases)
       // as part of initializing the app.
-      InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
+      //InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
     }
 
-    await PaymentService.instance.init();
+    //await PaymentService.instance.init();
     await MobileAds.instance.initialize();
 
     bool kReleaseMode = true;
