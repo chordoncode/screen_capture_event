@@ -79,11 +79,7 @@ public class ScreenCaptureEventPlugin implements FlutterPlugin, MethodCallHandle
                     File file = new File(fullPath + filename);
 
                     if(file.exists()){
-                      if(getMimeType(file.getPath()).contains("video")){
-                        stopAllRecordWatcher();
-                        setScreenRecordStatus(true);
-                        updateScreenRecordStatus();
-                      }else if(getMimeType(file.getPath()).contains("image")){
+                      if(getMimeType(file.getPath()).contains("image")){
                         channel.invokeMethod("screenshot", file.getPath());
                       }
                     }
@@ -105,11 +101,7 @@ public class ScreenCaptureEventPlugin implements FlutterPlugin, MethodCallHandle
 
                   handler.post(() -> {
                     if(file.exists()){
-                      if(getMimeType(file.getPath()).contains("video")){
-                        stopAllRecordWatcher();
-                        setScreenRecordStatus(true);
-                        updateScreenRecordStatus();
-                      }else if(getMimeType(file.getPath()).contains("image")){
+                      if(getMimeType(file.getPath()).contains("image")){
                         channel.invokeMethod("screenshot", file.getPath());
                       }
                     }
@@ -129,65 +121,6 @@ public class ScreenCaptureEventPlugin implements FlutterPlugin, MethodCallHandle
         watchModifier.clear();
         break;
       default:
-    }
-  }
-
-  private void stopAllRecordWatcher(){
-    for (Map.Entry<String, FileObserver> stringObjectEntry : watchModifier.entrySet()) {
-      stringObjectEntry.getValue().stopWatching();
-    }
-    watchModifier.clear();
-    setScreenRecordStatus(false);
-  }
-
-  private void updateScreenRecordStatus(){
-    List<String> paths = new ArrayList<>();
-    for(Path path : Path.values()){
-      paths.add(path.getPath());
-    }
-    for (int i = 0; i < Path.values().length;i++){
-      String fullPath = paths.get(i);
-      File newFile = getLastModified(fullPath);
-      if(newFile!=null && getMimeType(newFile.getPath()).toLowerCase().contains("video") && !watchModifier.containsKey(newFile.getPath())){
-        watchModifier.put(newFile.getPath(), new FileObserver(newFile) {
-          @Override
-          public void onEvent(int event, @Nullable String path) {
-            long curSize = newFile.length();
-            if(curSize > tempSize){
-              if(timeout!=null){
-                try {
-                  timeout.cancel();
-                  timeout = null;
-                }catch (Exception ignored){}
-              }
-              setScreenRecordStatus(event == FileObserver.MODIFY);
-              tempSize = newFile.length();
-            }
-            if(timeout == null){
-              timeout = new Timer();
-              timeout.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                  if(watchModifier.containsKey(newFile.getPath())){
-                    setScreenRecordStatus(curSize != tempSize);
-                  }
-                }
-              }, 1500);
-            }
-          }
-        });
-        FileObserver watch = watchModifier.get(newFile.getPath());
-        if(watch!=null) watch.startWatching();
-      }
-    }
-  }
-
-  void setScreenRecordStatus(boolean value){
-    if(screenRecording != value){
-      new Handler(Looper.getMainLooper()).post(() -> {
-        screenRecording = value;
-        channel.invokeMethod("screenrecord",value);
-      });
     }
   }
 
