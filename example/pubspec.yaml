@@ -1,6 +1,6 @@
 name: grab_hashtag
 description: Demonstrates how to use the screen_capture_event plugin.
-version: 1.0.0+2
+version: 1.0.0+3
 publish_to: 'none'
 
 environment:
@@ -51,6 +51,7 @@ dependencies:
   flutter_dialogs: ^2.1.1
   icon_animator: ^0.0.4
   neon: ^0.1.0
+  flutter_adfit: ^1.1.0
 
 dev_dependencies:
   flutter_test:
